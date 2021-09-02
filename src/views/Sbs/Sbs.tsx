@@ -1,4 +1,4 @@
-import React, { /*useCallback, useEffect, */useMemo, useState } from 'react';
+import React, { /*useCallback, */ useEffect, useMemo, useState } from 'react';
 import Page from '../../components/Page';
 import PitImage from '../../assets/img/pit.png';
 import { createGlobalStyle } from 'styled-components';
@@ -19,6 +19,8 @@ import TokenInput from '../../components/TokenInput';
 import Card from '../../components/Card';
 import CardContent from '../../components/CardContent';
 import TokenSymbol from '../../components/TokenSymbol';
+import ItemSBS from "../../components/ItemSBS/ItemSBS"
+import db from "./db.json"
 
 const BackgroundImage = createGlobalStyle`
   body {
@@ -38,7 +40,7 @@ const Sbs: React.FC = () => {
   const [tbondAmount, setTbondAmount] = useState('');
   const [tshareAmount, setTshareAmount] = useState('');
 
-  const [approveStatus, approve] = useApprove(tombFinance.TBOND, tombFinance.contracts.TShareSwapper.address);
+  // const [approveStatus, approve] = useApprove(tombFinance.TBOND, tombFinance.contracts.TShareSwapper.address);
   const { onSwapTShare } = useSwapTBondToTShare();
   const tshareSwapperStat = useTShareSwapperStats(account);
 
@@ -84,11 +86,27 @@ const Sbs: React.FC = () => {
     setTbondAmount(getDisplayBalance(updateTBondAmount, 18, 6));
   }
 
+  const {data} = db;
+
+  //function to get all of the data from de db.json
+
+  // const getDataApi = () : void =>{
+  //   const res = fetch("https://localhost/4000/data").then(r => r.json())
+  //   console.log(res)
+  // }
+
+  // useEffect(()=>{
+  //   getDataApi()
+  // }, [])
+
   return (
     <Switch>
       <Page>
-        <BackgroundImage />
-        {!!account ? (
+         <BackgroundImage />
+         {data.map(item => (
+           <ItemSBS item={item} key={item.id}/>
+         ))}
+        {/* {!!account ? (
           <>
             <Route exact path={path}>
               <PageHeader icon={'🏦'} title="TBond -> TShare Swap" subtitle="Swap TBond to TShare" />
@@ -161,7 +179,7 @@ const Sbs: React.FC = () => {
                 <Grid item xs={8}>
                   <Card>
                     <CardContent>
-                      <StyledApproveWrapper>
+                      {/* <StyledApproveWrapper>
                       {approveStatus !== ApprovalState.APPROVED ? (
                         <Button
                           disabled={approveStatus !== ApprovalState.NOT_APPROVED}
@@ -182,8 +200,8 @@ const Sbs: React.FC = () => {
                           Swap
                         </Button>
                       )}
-                      </StyledApproveWrapper>
-                    </CardContent>
+                      </StyledApproveWrapper> */}
+                    {/* </CardContent>
                   </Card>
                 </Grid>
               </Grid>
@@ -191,7 +209,7 @@ const Sbs: React.FC = () => {
           </>
         ) : (
           <UnlockWallet />
-        )}
+        )}  */}
       </Page>
     </Switch>
   );

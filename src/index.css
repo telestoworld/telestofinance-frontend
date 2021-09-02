@@ -79,3 +79,6 @@ code {
   background-color: black !important;
   color: #757ce8 !important;
 }
+.MuiSlider-markLabel {
+  color: #000 !important;
+}
