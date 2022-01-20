@@ -145,11 +145,11 @@ const Home = () => {
         <Grid item xs={12} sm={8}>
           <Paper>
             <Box p={4}>
-              <h2>Welcome to Tomb Finance</h2>
-              <p>The first algorithmic stablecoin on Fantom Opera, pegged to the price of 1 FTM via seigniorage.</p>
+              <h2>Welcome to Telesto Finance</h2>
+              <p>The first algorithmic stablecoin on Aurora, pegged to the price of 1 Near at a 10:1 via seigniorage.</p>
               <p>
-                Stake your TOMB-FTM LP in the Cemetery to earn TSHARE rewards.
-                Then stake your earned TSHARE in the Masonry to earn more TOMB!
+                Stake your TELO-NEAR LP in the Vapor Pools to earn TSHARES.
+                Then stake your earned TSHARES in the Trident Lounge to earn more TELO!
               </p>
             </Box>
           </Paper>

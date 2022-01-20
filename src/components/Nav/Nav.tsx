@@ -97,7 +97,7 @@ const Nav = () => {
             <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
               {/* <a className={ classes.brandLink } href="/">Tomb Finance</a> */}
               <Link to="/" color="inherit" className={classes.brandLink}>
-                Tomb Finance
+                Telesto Finance
               </Link>
             </Typography>
             <Box mr={5}>
@@ -140,7 +140,7 @@ const Nav = () => {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap>
-              Tomb Finance
+              Telesto Finance
             </Typography>
 
             <Drawer
