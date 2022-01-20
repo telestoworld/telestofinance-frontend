@@ -9,20 +9,20 @@ import { Alert } from '@material-ui/lab';
 
 import UnlockWallet from '../../components/UnlockWallet';
 import Page from '../../components/Page';
-import CemeteryCard from './CemeteryCard';
-import CemeteryImage from '../../assets/img/cemetery.png';
+import VaporCard from './VaporCard';
+import VaporImage from '../../assets/img/vapor.png';
 import { createGlobalStyle } from 'styled-components';
 
 import useBanks from '../../hooks/useBanks';
 
 const BackgroundImage = createGlobalStyle`
   body {
-    background: url(${CemeteryImage}) no-repeat !important;
+    background: url(${VaporImage}) no-repeat !important;
     background-size: cover !important;
   }
 `;
 
-const Cemetery = () => {
+const VaporPools = () => {
   const [banks] = useBanks();
   const { path } = useRouteMatch();
   const { account } = useWallet();
@@ -35,20 +35,20 @@ const Cemetery = () => {
           {!!account ? (
             <Container maxWidth="lg">
               <Typography color="textPrimary" align="center" variant="h3" gutterBottom>
-                Cemetery
+                Vapor Pools
               </Typography>
 
               <Box mt={5}>
                 <div hidden={activeBanks.filter((bank) => bank.sectionInUI === 2).length === 0}>
                   <Typography color="textPrimary" variant="h4" gutterBottom>
-                    Earn TSHARE by staking LP
+                    Earn Mineral by staking LP
                   </Typography>
                   <Grid container spacing={3}>
                     {activeBanks
                       .filter((bank) => bank.sectionInUI === 2)
                       .map((bank) => (
                         <React.Fragment key={bank.name}>
-                          <CemeteryCard bank={bank} />
+                          <VaporCard bank={bank} />
                         </React.Fragment>
                       ))}
                   </Grid>
@@ -66,7 +66,7 @@ const Cemetery = () => {
                       .filter((bank) => bank.sectionInUI === 1)
                       .map((bank) => (
                         <React.Fragment key={bank.name}>
-                          <CemeteryCard bank={bank} />
+                          <VaporCard bank={bank} />
                         </React.Fragment>
                       ))}
                   </Grid>
@@ -81,7 +81,7 @@ const Cemetery = () => {
                       .filter((bank) => bank.sectionInUI === 0)
                       .map((bank) => (
                         <React.Fragment key={bank.name}>
-                          <CemeteryCard bank={bank} />
+                          <VaporCard bank={bank} />
                         </React.Fragment>
                       ))}
                   </Grid>
@@ -101,4 +101,4 @@ const Cemetery = () => {
   );
 };
 
-export default Cemetery;
+export default VaporPools;
