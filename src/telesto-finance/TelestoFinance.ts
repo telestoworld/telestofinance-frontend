@@ -408,8 +408,8 @@ export class TombFinance {
   ): Promise<BigNumber> {
     const pool = this.contracts[poolName];
     try {
-      if (earnTokenName === 'TOMB') {
-        return await pool.pendingTOMB(poolId, account);
+      if (earnTokenName === 'TELO') {
+        return await pool.pendingTELO(poolId, account);
       } else {
         return await pool.pendingShare(poolId, account);
       }

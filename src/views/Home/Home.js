@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import Page from '../../components/Page';
 import HomeImage from '../../assets/img/home.png';
-import CashImage from '../../assets/img/crypto_tomb_cash.svg';
+import CashImage from '../../assets/img/crypto_telo_cash.svg';
 import Image from 'material-ui-image';
 import styled from 'styled-components';
 import { Alert } from '@material-ui/lab';
@@ -9,15 +9,15 @@ import { createGlobalStyle } from 'styled-components';
 import CountUp from 'react-countup';
 import CardIcon from '../../components/CardIcon';
 import TokenSymbol from '../../components/TokenSymbol';
-import useTombStats from '../../hooks/useTombStats';
+import useTeloStats from '../../hooks/useTStats';
 import useLpStats from '../../hooks/useLpStats';
 import useModal from '../../hooks/useModal';
 import useZap from '../../hooks/useZap';
 import useBondStats from '../../hooks/useBondStats';
-import usetShareStats from '../../hooks/usetShareStats';
+import useMineralStats from '../../hooks/useMineralStats';
 import useTotalValueLocked from '../../hooks/useTotalValueLocked';
-import { tomb as tombTesting, tShare as tShareTesting } from '../../tomb-finance/deployments/deployments.testing.json';
-import { tomb as tombProd, tShare as tShareProd } from '../../tomb-finance/deployments/deployments.mainnet.json';
+import { telo as teloTesting, mineral as mineralTesting } from '../../telesto-finance/deployments/deployments.testing.json';
+import { telo as teloProd, mineral as mineralProd } from '../../telesto-finance/deployments/deployments.mainnet.json';
 
 import MetamaskFox from '../../assets/img/metamask-fox.svg';
 
@@ -25,7 +25,7 @@ import { Box, Button, Card, CardContent, Grid, Paper } from '@material-ui/core';
 import ZapModal from '../Bank/components/ZapModal';
 
 import { makeStyles } from '@material-ui/core/styles';
-import useTombFinance from '../../hooks/useTombFinance';
+import useTeloFinance from '../../hooks/useTeloFinance';
 
 const BackgroundImage = createGlobalStyle`
   body {
@@ -45,90 +45,92 @@ const useStyles = makeStyles((theme) => ({
 const Home = () => {
   const classes = useStyles();
   const TVL = useTotalValueLocked();
-  const tombFtmLpStats = useLpStats('TOMB-FTM-LP');
-  const tShareFtmLpStats = useLpStats('TSHARE-FTM-LP');
-  const tombStats = useTombStats();
-  const tShareStats = usetShareStats();
-  const tBondStats = useBondStats();
-  const tombFinance = useTombFinance();
+  const teloNearLpStats = useLpStats('TELO-NEAR-LP');
+  const mineralNearLpStats = useLpStats('MINERAL-NEAR-LP');
+  const teloStats = useTeloStats();
+  const mineralStats = useMineralStats();
+  const bondStats = useBondStats();
+  const teloFinance = useTeloFinance();
 
-  let tomb;
-  let tShare;
+  let telo;
+  let mineral;
   if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-    tomb = tombTesting;
-    tShare = tShareTesting;
+    telo = terloTesting;
+    mineral = mineralTesting;
   } else {
-    tomb = tombProd;
-    tShare = tShareProd;
+    telo = teloProd;
+    mineral = mineralProd;
   }
 
-  const buyTombAddress = 'https://spookyswap.finance/swap?outputCurrency=' + tomb.address;
-  const buyTShareAddress = 'https://spookyswap.finance/swap?outputCurrency=' + tShare.address;
+  //Buy TELO
 
-  const tombLPStats = useMemo(() => (tombFtmLpStats ? tombFtmLpStats : null), [tombFtmLpStats]);
-  const tshareLPStats = useMemo(() => (tShareFtmLpStats ? tShareFtmLpStats : null), [tShareFtmLpStats]);
-  const tombPriceInDollars = useMemo(
-    () => (tombStats ? Number(tombStats.priceInDollars).toFixed(2) : null),
-    [tombStats],
-  );
-  const tombPriceInFTM = useMemo(() => (tombStats ? Number(tombStats.tokenInFtm).toFixed(4) : null), [tombStats]);
-  const tombCirculatingSupply = useMemo(() => (tombStats ? String(tombStats.circulatingSupply) : null), [tombStats]);
-  const tombTotalSupply = useMemo(() => (tombStats ? String(tombStats.totalSupply) : null), [tombStats]);
+  const buyTeloAddress = 'https://spookyswap.finance/swap?outputCurrency=' + telo.address;
+  const buyMineralAddress = 'https://spookyswap.finance/swap?outputCurrency=' + mineral.address;
 
-  const tSharePriceInDollars = useMemo(
-    () => (tShareStats ? Number(tShareStats.priceInDollars).toFixed(2) : null),
-    [tShareStats],
+  const teloLPStats = useMemo(() => (teloNearLpStats ? teloNearLpStats : null), [teloNearLpStats]);
+  const mineralLPStats = useMemo(() => (mineralNearLpStats ? mineralNearLpStats : null), [mineralNearLpStats]);
+  const teloPriceInDollars = useMemo(
+    () => (teloStats ? Number(teloStats.priceInDollars).toFixed(2) : null),
+    [teloStats],
   );
-  const tSharePriceInFTM = useMemo(
-    () => (tShareStats ? Number(tShareStats.tokenInFtm).toFixed(4) : null),
-    [tShareStats],
-  );
-  const tShareCirculatingSupply = useMemo(
-    () => (tShareStats ? String(tShareStats.circulatingSupply) : null),
-    [tShareStats],
-  );
-  const tShareTotalSupply = useMemo(() => (tShareStats ? String(tShareStats.totalSupply) : null), [tShareStats]);
+  const teloPriceInFTM = useMemo(() => (teloStats ? Number(teloStats.tokenInFtm).toFixed(4) : null), [teloStats]);
+  const teloCirculatingSupply = useMemo(() => (teloStats ? String(teloStats.circulatingSupply) : null), [teloStats]);
+  const teloTotalSupply = useMemo(() => (teloStats ? String(teloStats.totalSupply) : null), [teloStats]);
 
-  const tBondPriceInDollars = useMemo(
-    () => (tBondStats ? Number(tBondStats.priceInDollars).toFixed(2) : null),
-    [tBondStats],
+  const mineralPriceInDollars = useMemo(
+    () => (mineralStats ? Number(mineralStats.priceInDollars).toFixed(2) : null),
+    [mineralStats],
   );
-  const tBondPriceInFTM = useMemo(() => (tBondStats ? Number(tBondStats.tokenInFtm).toFixed(4) : null), [tBondStats]);
-  const tBondCirculatingSupply = useMemo(
-    () => (tBondStats ? String(tBondStats.circulatingSupply) : null),
-    [tBondStats],
+  const mineralPriceInNEAR = useMemo(
+    () => (mineralStats ? Number(mineralStats.tokenInNear).toFixed(4) : null),
+    [mineralStats],
   );
-  const tBondTotalSupply = useMemo(() => (tBondStats ? String(tBondStats.totalSupply) : null), [tBondStats]);
+  const mineralCirculatingSupply = useMemo(
+    () => (mineralStats ? String(mineralStats.circulatingSupply) : null),
+    [mineralStats],
+  );
+  const mineralTotalSupply = useMemo(() => (mineralStats ? String(mineralStats.totalSupply) : null), [mineralStats]);
 
-  const tombLpZap = useZap({ depositTokenName: 'TOMB-FTM-LP' });
-  const tshareLpZap = useZap({ depositTokenName: 'TSHARE-FTM-LP' });
+  const bondPriceInDollars = useMemo(
+    () => (bondStats ? Number(bondStats.priceInDollars).toFixed(2) : null),
+    [bondStats],
+  );
+  const bondPriceInNEAR = useMemo(() => (bondStats ? Number(bondStats.tokenInNear).toFixed(4) : null), [bondStats]);
+  const bondCirculatingSupply = useMemo(
+    () => (bondStats ? String(bondStats.circulatingSupply) : null),
+    [bondStats],
+  );
+  const bondTotalSupply = useMemo(() => (bondStats ? String(bondStats.totalSupply) : null), [bondStats]);
+
+  const teloLpZap = useZap({ depositTokenName: 'TELO-NEAR-LP' });
+  const mineralLpZap = useZap({ depositTokenName: 'MINERAL-NEAR-LP' });
 
   const StyledLink = styled.a`
     font-weight: 700;
     text-decoration: none;
   `;
 
-  const [onPresentTombZap, onDissmissTombZap] = useModal(
+  const [onPresentTeloZap, onDissmissTeloZap] = useModal(
     <ZapModal
       decimals={18}
       onConfirm={(zappingToken, tokenName, amount) => {
         if (Number(amount) <= 0 || isNaN(Number(amount))) return;
-        tombLpZap.onZap(zappingToken, tokenName, amount);
-        onDissmissTombZap();
+        teloLpZap.onZap(zappingToken, tokenName, amount);
+        onDissmissTeloZap();
       }}
-      tokenName={'TOMB-FTM-LP'}
+      tokenName={'TELO-NEAR-LP'}
     />,
   );
 
-  const [onPresentTshareZap, onDissmissTshareZap] = useModal(
+  const [onPresentMineralZap, onDissmissMineralZap] = useModal(
     <ZapModal
       decimals={18}
       onConfirm={(zappingToken, tokenName, amount) => {
         if (Number(amount) <= 0 || isNaN(Number(amount))) return;
-        tshareLpZap.onZap(zappingToken, tokenName, amount);
-        onDissmissTshareZap();
+        mineralLpZap.onZap(zappingToken, tokenName, amount);
+        onDissmissMineralZap();
       }}
-      tokenName={'TSHARE-FTM-LP'}
+      tokenName={'MINERAL-NEAR-LP'}
     />,
   );
 
@@ -148,8 +150,8 @@ const Home = () => {
               <h2>Welcome to Telesto Finance</h2>
               <p>The first algorithmic stablecoin on Aurora, pegged to the price of 1 Near at a 10:1 via seigniorage.</p>
               <p>
-                Stake your TELO-NEAR LP in the Vapor Pools to earn TSHARES.
-                Then stake your earned TSHARES in the Trident Lounge to earn more TELO!
+                Stake your TELO-NEAR LP in the Vapor Pools to earn COIN.
+                Then stake your earned COIN in the Trident Lounge to earn more TELO!
               </p>
             </Box>
           </Paper>
@@ -162,7 +164,7 @@ const Home = () => {
     <Grid item  xs={12} sm={12} justify="center"  style={{ margin: '12px', display: 'flex' }}>
             <Alert variant="filled" severity="warning">
               <b>
-      Please visit our <StyledLink target="_blank" href="https://docs.tomb.finance">documentation</StyledLink> before purchasing TOMB or TSHARE!</b>
+              Please visit our <StyledLink target="_blank" href="https://telesto.gitbook.io/telesto/">documentation</StyledLink> before purchasing TELO or MINERAL!</b>
             </Alert>
         </Grid>
         </Grid>
@@ -185,34 +187,34 @@ const Home = () => {
               <Button color="primary" href="/masonry" variant="contained" style={{ marginRight: '10px' }}>
                 Stake Now
               </Button>
-              <Button href="/cemetery" variant="contained" style={{ marginRight: '10px' }}>
+              <Button href="/vaporpools" variant="contained" style={{ marginRight: '10px' }}>
                 Farm Now
               </Button>
               <Button
                 color="primary"
                 target="_blank"
-                href={buyTombAddress}
+                href={buyTeloAddress}
                 variant="contained"
                 style={{ marginRight: '10px' }}
                 className={classes.button}
               >
-                Buy TOMB
+                Buy TELO
               </Button>
-              <Button variant="contained" target="_blank" href={buyTShareAddress} className={classes.button}>
-                Buy TSHARE
+              <Button variant="contained" target="_blank" href={buyMineralAddress} className={classes.button}>
+                Buy MINERAL
               </Button>
             </CardContent>
           </Card>
         </Grid>
 
-        {/* TOMB */}
+        {/* TELO */}
         <Grid item xs={12} sm={4}>
           <Card>
             <CardContent align="center" style={{ position: 'relative' }}>
-              <h2>TOMB</h2>
+              <h2>TELO</h2>
               <Button
                 onClick={() => {
-                  tombFinance.watchAssetInMetamask('TOMB');
+                  teloFinance.watchAssetInMetamask('TELO');
                 }}
                 color="primary"
                 variant="outlined"
@@ -223,35 +225,35 @@ const Home = () => {
               </Button>
               <Box mt={2}>
                 <CardIcon>
-                  <TokenSymbol symbol="TOMB" />
+                  <TokenSymbol symbol="TELO" />
                 </CardIcon>
               </Box>
               Current Price
               <Box>
-                <span style={{ fontSize: '30px' }}>{tombPriceInFTM ? tombPriceInFTM : '-.----'} FTM</span>
+                <span style={{ fontSize: '30px' }}>{teloPriceInFTM ? teloPriceInFTM : '-.----'} TELO</span>
               </Box>
               <Box>
                 <span style={{ fontSize: '16px', alignContent: 'flex-start' }}>
-                  ${tombPriceInDollars ? tombPriceInDollars : '-.--'}
+                  ${teloPriceInDollars ? teloPriceInDollars : '-.--'}
                 </span>
               </Box>
               <span style={{ fontSize: '12px' }}>
-                Market Cap: ${(tombCirculatingSupply * tombPriceInDollars).toFixed(2)} <br />
-                Circulating Supply: {tombCirculatingSupply} <br />
-                Total Supply: {tombTotalSupply}
+                Market Cap: ${(teloCirculatingSupply * teloPriceInDollars).toFixed(2)} <br />
+                Circulating Supply: {teloCirculatingSupply} <br />
+                Total Supply: {teloTotalSupply}
               </span>
             </CardContent>
           </Card>
         </Grid>
 
-        {/* TSHARE */}
+        {/* MINERAL */}
         <Grid item xs={12} sm={4}>
           <Card>
             <CardContent align="center" style={{ position: 'relative' }}>
-              <h2>TSHARE</h2>
+              <h2>MINERAL</h2>
               <Button
                 onClick={() => {
-                  tombFinance.watchAssetInMetamask('TSHARE');
+                  teloFinance.watchAssetInMetamask('MINERAL');
                 }}
                 color="primary"
                 variant="outlined"
@@ -262,33 +264,33 @@ const Home = () => {
               </Button>
               <Box mt={2}>
                 <CardIcon>
-                  <TokenSymbol symbol="TSHARE" />
+                  <TokenSymbol symbol="MINERAL" />
                 </CardIcon>
               </Box>
               Current Price
               <Box>
-                <span style={{ fontSize: '30px' }}>{tSharePriceInFTM ? tSharePriceInFTM : '-.----'} FTM</span>
+                <span style={{ fontSize: '30px' }}>{mineralPriceInFTM ? mineralPriceInFTM : '-.----'} FTM</span>
               </Box>
               <Box>
-                <span style={{ fontSize: '16px' }}>${tSharePriceInDollars ? tSharePriceInDollars : '-.--'}</span>
+                <span style={{ fontSize: '16px' }}>${mineralPriceInDollars ? mineralPriceInDollars : '-.--'}</span>
               </Box>
               <span style={{ fontSize: '12px' }}>
-                Market Cap: ${(tShareCirculatingSupply * tSharePriceInDollars).toFixed(2)} <br />
-                Circulating Supply: {tShareCirculatingSupply} <br />
-                Total Supply: {tShareTotalSupply}
+                Market Cap: ${(mineralCirculatingSupply * mineralPriceInDollars).toFixed(2)} <br />
+                Circulating Supply: {mineralCirculatingSupply} <br />
+                Total Supply: {mineralTotalSupply}
               </span>
             </CardContent>
           </Card>
         </Grid>
 
-        {/* TBOND */}
+        {/* BOND */}
         <Grid item xs={12} sm={4}>
           <Card>
             <CardContent align="center" style={{ position: 'relative' }}>
-              <h2>TBOND</h2>
+              <h2>BOND</h2>
               <Button
                 onClick={() => {
-                  tombFinance.watchAssetInMetamask('TBOND');
+                  teloFinance.watchAssetInMetamask('BOND');
                 }}
                 color="primary"
                 variant="outlined"
@@ -299,20 +301,20 @@ const Home = () => {
               </Button>
               <Box mt={2}>
                 <CardIcon>
-                  <TokenSymbol symbol="TBOND" />
+                  <TokenSymbol symbol="BOND" />
                 </CardIcon>
               </Box>
               Current Price
               <Box>
-                <span style={{ fontSize: '30px' }}>{tBondPriceInFTM ? tBondPriceInFTM : '-.----'} FTM</span>
+                <span style={{ fontSize: '30px' }}>{bondPriceInFTM ? bondPriceInFTM : '-.----'} NEAR</span>
               </Box>
               <Box>
-                <span style={{ fontSize: '16px' }}>${tBondPriceInDollars ? tBondPriceInDollars : '-.--'}</span>
+                <span style={{ fontSize: '16px' }}>${bondPriceInDollars ? bondPriceInDollars : '-.--'}</span>
               </Box>
               <span style={{ fontSize: '12px' }}>
-                Market Cap: ${(tBondCirculatingSupply * tBondPriceInDollars).toFixed(2)} <br />
-                Circulating Supply: {tBondCirculatingSupply} <br />
-                Total Supply: {tBondTotalSupply}
+                Market Cap: ${(bondCirculatingSupply * bondPriceInDollars).toFixed(2)} <br />
+                Circulating Supply: {bondCirculatingSupply} <br />
+                Total Supply: {bondTotalSupply}
               </span>
             </CardContent>
           </Card>
@@ -320,27 +322,27 @@ const Home = () => {
         <Grid item xs={12} sm={6}>
           <Card>
             <CardContent align="center">
-              <h2>TOMB-FTM Spooky LP</h2>
+              <h2>TELO-NEAR LP</h2>
               <Box mt={2}>
                 <CardIcon>
-                  <TokenSymbol symbol="TOMB-FTM-LP" />
+                  <TokenSymbol symbol="TELO-NEAR-LP" />
                 </CardIcon>
               </Box>
               <Box mt={2}>
-                <Button color="primary" disabled={true} onClick={onPresentTombZap} variant="contained">
+                <Button color="primary" disabled={true} onClick={onPresentTeloZap} variant="contained">
                   Zap In
                 </Button>
               </Box>
               <Box mt={2}>
                 <span style={{ fontSize: '26px' }}>
-                  {tombLPStats?.tokenAmount ? tombLPStats?.tokenAmount : '-.--'} TOMB /{' '}
-                  {tombLPStats?.ftmAmount ? tombLPStats?.ftmAmount : '-.--'} FTM
+                  {teloLPStats?.tokenAmount ? teloLPStats?.tokenAmount : '-.--'} TELO /{' '}
+                  {teloLPStats?.ftmAmount ? teloLPStats?.ftmAmount : '-.--'} NEAR
                 </span>
               </Box>
-              <Box>${tombLPStats?.priceOfOne ? tombLPStats.priceOfOne : '-.--'}</Box>
+              <Box>${teloLPStats?.priceOfOne ? teloLPStats.priceOfOne : '-.--'}</Box>
               <span style={{ fontSize: '12px' }}>
-                Liquidity: ${tombLPStats?.totalLiquidity ? tombLPStats.totalLiquidity : '-.--'} <br />
-                Total supply: {tombLPStats?.totalSupply ? tombLPStats.totalSupply : '-.--'}
+                Liquidity: ${teloLPStats?.totalLiquidity ? teloLPStats.totalLiquidity : '-.--'} <br />
+                Total supply: {teloLPStats?.totalSupply ? teloLPStats.totalSupply : '-.--'}
               </span>
             </CardContent>
           </Card>
@@ -348,28 +350,28 @@ const Home = () => {
         <Grid item xs={12} sm={6}>
           <Card>
             <CardContent align="center">
-              <h2>TSHARE-FTM Spooky LP</h2>
+              <h2>MINERAL- NEAR LP</h2>
               <Box mt={2}>
                 <CardIcon>
-                  <TokenSymbol symbol="TSHARE-FTM-LP" />
+                  <TokenSymbol symbol="MINERAL-NEAR-LP" />
                 </CardIcon>
               </Box>
               <Box mt={2}>
-                <Button color="primary" onClick={onPresentTshareZap} variant="contained">
+                <Button color="primary" onClick={onPresentMineralZap} variant="contained">
                   Zap In
                 </Button>
               </Box>
               <Box mt={2}>
                 <span style={{ fontSize: '26px' }}>
-                  {tshareLPStats?.tokenAmount ? tshareLPStats?.tokenAmount : '-.--'} TSHARE /{' '}
-                  {tshareLPStats?.ftmAmount ? tshareLPStats?.ftmAmount : '-.--'} FTM
+                  {mineralLPStats?.tokenAmount ? mineralLPStats?.tokenAmount : '-.--'} MINERAL /{' '}
+                  {mineralLPStats?.nearAmount ? mineralLPStats?.nearAmount : '-.--'} NEAR
                 </span>
               </Box>
-              <Box>${tshareLPStats?.priceOfOne ? tshareLPStats.priceOfOne : '-.--'}</Box>
+              <Box>${mineralLPStats?.priceOfOne ? mineralLPStats.priceOfOne : '-.--'}</Box>
               <span style={{ fontSize: '12px' }}>
-                Liquidity: ${tshareLPStats?.totalLiquidity ? tshareLPStats.totalLiquidity : '-.--'}
+                Liquidity: ${mineralLPStats?.totalLiquidity ? mineralLPStats.totalLiquidity : '-.--'}
                 <br />
-                Total supply: {tshareLPStats?.totalSupply ? tshareLPStats.totalSupply : '-.--'}
+                Total supply: {mineralLPStats?.totalSupply ? mineralLPStats.totalSupply : '-.--'}
               </span>
             </CardContent>
           </Card>
