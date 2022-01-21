@@ -5,21 +5,21 @@ import useHandleTransactionReceipt from '../useHandleTransactionReceipt';
 import { parseUnits } from 'ethers/lib/utils';
 
 
-const useSwapTBondToTShare = () => {
+const useSwapScrapToMineral = () => {
   const tombFinance = useTombFinance();
   const handleTransactionReceipt = useHandleTransactionReceipt();
 
-  const handleSwapTShare = useCallback(
-  	(tbondAmount: string) => {
-	  	const tbondAmountBn = parseUnits(tbondAmount, 18);
+  const handleSwapMineral = useCallback(
+  	(scrapAmount: string) => {
+	  	const scrapAmountBn = parseUnits(scrapAmount, 18);
 	  	handleTransactionReceipt(
-	  		tombFinance.swapTBondToTShare(tbondAmountBn),
-	  		`Swap ${tbondAmount} TBond to TShare`
+	  		tombFinance.swapScrapToMineral(scrapAmountBn),
+	  		`Swap ${scrapAmount} Scrap to Mineral`
 	  	);
   	},
   	[tombFinance, handleTransactionReceipt]
   );
-  return { onSwapTShare: handleSwapTShare };
+  return { onSwapMineral: handleSwapMineral };
 };
 
-export default useSwapTBondToTShare;
+export default useSwapScrapToMineral;

@@ -1,26 +1,26 @@
 import { useEffect, useState } from 'react';
 import useTombFinance from './useTombFinance';
-import { TokenStat } from '../tomb-finance/types';
+import { TokenStat } from '../telesto-finance/types';
 import useRefresh from './useRefresh';
 
-const useBondStats = () => {
+const useScrapStats = () => {
   const [stat, setStat] = useState<TokenStat>();
   const { slowRefresh } = useRefresh();
   const tombFinance = useTombFinance();
 
   useEffect(() => {
-    async function fetchBondPrice() {
+    async function fetchScrapPrice() {
       try {
-        setStat(await tombFinance.getBondStat());
+        setStat(await tombFinance.getScrapStat());
       }
       catch(err){
         console.error(err);
       }
     }
-    fetchBondPrice();
+    fetchScrapPrice();
   }, [setStat, tombFinance, slowRefresh]);
 
   return stat;
 };
 
-export default useBondStats;
+export default useScrapStats;

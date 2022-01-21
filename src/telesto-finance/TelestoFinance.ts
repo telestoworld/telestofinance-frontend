@@ -27,11 +27,11 @@ export class TombFinance {
   externalTokens: { [name: string]: ERC20 };
   masonryVersionOfUser?: string;
 
-  TOMBWFTM_LP: Contract;
-  TOMB: ERC20;
-  TSHARE: ERC20;
-  TBOND: ERC20;
-  FTM: ERC20;
+  TELOWNEAR_LP: Contract;
+  TELO: ERC20;
+  MINERAL: ERC20;
+  SCRAP: ERC20;
+  NEAR: ERC20;
 
   constructor(cfg: Configuration) {
     const { deployments, externalTokens } = cfg;
@@ -46,13 +46,13 @@ export class TombFinance {
     for (const [symbol, [address, decimal]] of Object.entries(externalTokens)) {
       this.externalTokens[symbol] = new ERC20(address, provider, symbol, decimal);
     }
-    this.TOMB = new ERC20(deployments.tomb.address, provider, 'TOMB');
-    this.TSHARE = new ERC20(deployments.tShare.address, provider, 'TSHARE');
-    this.TBOND = new ERC20(deployments.tBond.address, provider, 'TBOND');
-    this.FTM = this.externalTokens['WFTM'];
+    this.TELO = new ERC20(deployments.tomb.address, provider, 'TELO');
+    this.MINERAL = new ERC20(deployments.tShare.address, provider, 'MINERAL');
+    this.SCRAP = new ERC20(deployments.tBond.address, provider, 'SCRAP');
+    this.NEAR = this.externalTokens['WNEAR'];
 
     // Uniswap V2 Pair
-    this.TOMBWFTM_LP = new Contract(externalTokens['TOMB-FTM-LP'][0], IUniswapV2PairABI, provider);
+    this.TELOWNEAR_LP = new Contract(externalTokens['TELO-NEAR-LP'][0], IUniswapV2PairABI, provider);
 
     this.config = cfg;
     this.provider = provider;
@@ -69,11 +69,11 @@ export class TombFinance {
     for (const [name, contract] of Object.entries(this.contracts)) {
       this.contracts[name] = contract.connect(this.signer);
     }
-    const tokens = [this.TOMB, this.TSHARE, this.TBOND, ...Object.values(this.externalTokens)];
+    const tokens = [this.TELO, this.MINERAL, this.SCRAP, ...Object.values(this.externalTokens)];
     for (const token of tokens) {
       token.connect(this.signer);
     }
-    this.TOMBWFTM_LP = this.TOMBWFTM_LP.connect(this.signer);
+    this.TELOWNEAR_LP = this.TELOWNEAR_LP.connect(this.signer);
     console.log(`🔓 Wallet is unlocked. Welcome, ${account}!`);
     this.fetchMasonryVersionOfUser()
       .then((version) => (this.masonryVersionOfUser = version))

@@ -5,7 +5,7 @@ import tombLogo from '../../assets/img/crypto_tomb_cash.svg';
 import tShareLogo from '../../assets/img/crypto_tomb_share.svg';
 import tombLogoPNG from '../../assets/img/crypto_tomb_cash.f2b44ef4.png';
 import tShareLogoPNG from '../../assets/img/crypto_tomb_share.bf1a6c52.png';
-import tBondLogo from '../../assets/img/crypto_tomb_bond.svg';
+import scrapLogo from '../../assets/img/crypto_tomb_bond.svg';
 
 import tombFtmLpLogo from '../../assets/img/tomb_ftm_lp.png';
 import tshareFtmLpLogo from '../../assets/img/tshare_ftm_lp.png';
@@ -22,7 +22,7 @@ const logosBySymbol: { [title: string]: string } = {
   TOMBPNG: tombLogoPNG,
   TSHAREPNG: tShareLogoPNG,
   TSHARE: tShareLogo,
-  TBOND: tBondLogo,
+  SCRAP: scrapLogo,
   WFTM: wftmLogo,
   BOO: booLogo,
   SHIBA: shibaLogo,
