@@ -10,16 +10,16 @@ import useTombFinance from '../../hooks/useTombFinance';
 import TokenSymbol from '../TokenSymbol';
 
 const AccountModal: React.FC<ModalProps> = ({ onDismiss }) => {
-  const tombFinance = useTombFinance();
+  const teloFinance = useTombFinance();
 
-  const tombBalance = useTokenBalance(tombFinance.TOMB);
-  const displayTombBalance = useMemo(() => getDisplayBalance(tombBalance), [tombBalance]);
+  const teloBalance = useTokenBalance(tombFinance.TELO);
+  const displayTeloBalance = useMemo(() => getDisplayBalance(teloBalance), [teloBalance]);
 
-  const tshareBalance = useTokenBalance(tombFinance.TSHARE);
-  const displayTshareBalance = useMemo(() => getDisplayBalance(tshareBalance), [tshareBalance]);
+  const mineralBalance = useTokenBalance(teloFinance.MINERAL);
+  const displayMineralBalance = useMemo(() => getDisplayBalance(mineralBalance), [mineralBalance]);
 
-  const tbondBalance = useTokenBalance(tombFinance.TBOND);
-  const displayTbondBalance = useMemo(() => getDisplayBalance(tbondBalance), [tbondBalance]);
+  const scrapBalance = useTokenBalance(tombFinance.SCRAP);
+  const displayScrapBalance = useMemo(() => getDisplayBalance(scrapBalance), [scrapBalance]);
 
   return (
     <Modal>
@@ -27,26 +27,26 @@ const AccountModal: React.FC<ModalProps> = ({ onDismiss }) => {
 
       <Balances>
         <StyledBalanceWrapper>
-          <TokenSymbol symbol="TOMB" />
+          <TokenSymbol symbol="TELO" />
           <StyledBalance>
-            <StyledValue>{displayTombBalance}</StyledValue>
-            <Label text="TOMB Available" />
+            <StyledValue>{displayTeloBalance}</StyledValue>
+            <Label text="TELO Available" />
           </StyledBalance>
         </StyledBalanceWrapper>
 
         <StyledBalanceWrapper>
-          <TokenSymbol symbol="TSHARE" />
+          <TokenSymbol symbol="MINERAL" />
           <StyledBalance>
-            <StyledValue>{displayTshareBalance}</StyledValue>
-            <Label text="TSHARE Available" />
+            <StyledValue>{displayMineralBalance}</StyledValue>
+            <Label text="MINERAL Available" />
           </StyledBalance>
         </StyledBalanceWrapper>
 
         <StyledBalanceWrapper>
-          <TokenSymbol symbol="TBOND" />
+          <TokenSymbol symbol="SCRAP" />
           <StyledBalance>
-            <StyledValue>{displayTbondBalance}</StyledValue>
-            <Label text="TBOND Available" />
+            <StyledValue>{displayScrapBalance}</StyledValue>
+            <Label text="SCRAP Available" />
           </StyledBalance>
         </StyledBalanceWrapper>
       </Balances>
