@@ -1,4 +1,4 @@
-# Contributing to [Tomb.Fiance](https://tomb.finance)
+# Contributing to Telesto Finance
 
 🎉 First off all, thanks for taking the time to contribute! 🎉
 
