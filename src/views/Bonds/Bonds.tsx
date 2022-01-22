@@ -17,7 +17,7 @@ import ExchangeStat from './components/ExchangeStat';
 import useTokenBalance from '../../hooks/useTokenBalance';
 import useScrapsPurchasable from '../../hooks/useScrapsPurchasable';
 import { getDisplayBalance } from '../../utils/formatBalance';
-import { BOND_REDEEM_PRICE, BOND_REDEEM_PRICE_BN } from '../../telo-finance/constants';
+import { SCRAP_REDEEM_PRICE, SCRAP_REDEEM_PRICE_BN } from '../../telo-finance/constants';
 
 const BackgroundImage = createGlobalStyle`
   body {
@@ -55,7 +55,7 @@ const Scraps: React.FC = () => {
     [teloFinance, addTransaction],
   );
   const isScrapRedeemable = useMemo(() => cashPrice.gt(BOND_REDEEM_PRICE_BN), [cashPrice]);
-  const isScrapPurchasable = useMemo(() => Number(bondStat?.tokenInNear) < 1.01, [bondStat]);
+  const isScrapPurchasable = useMemo(() => Number(scrapStat?.tokenInNear) < 1.01, [scrapStat]);
 
   return (
     <Switch>
@@ -77,10 +77,10 @@ const Scraps: React.FC = () => {
                   priceDesc={
                     !isScrapPurchasable
                       ? 'TELO is over peg'
-                      : getDisplayBalance(bondsPurchasable, 18, 4) + ' SCRAP available for purchase'
+                      : getDisplayBalance(scrapsPurchasable, 18, 4) + ' SCRAP available for purchase'
                   }
                   onExchange={handleBuyScraps}
-                  disabled={!bondStat || isScrapRedeemable}
+                  disabled={!scrapStat || isScrapRedeemable}
                 />
               </StyledCardWrapper>
               <StyledStatsWrapper>
@@ -93,7 +93,7 @@ const Scraps: React.FC = () => {
                 <ExchangeStat
                   tokenName="SCRAP"
                   description="Current Price: (TELO)^2"
-                  price={Number(bondStat?.tokenInNear).toFixed(2) || '-'}
+                  price={Number(scrapStat?.tokenInNear).toFixed(2) || '-'}
                 />
               </StyledStatsWrapper>
               <StyledCardWrapper>
@@ -105,7 +105,7 @@ const Scraps: React.FC = () => {
                   toTokenName="TELO"
                   priceDesc={`${getDisplayBalance(bondBalance)} SCRAP Available in wallet`}
                   onExchange={handleRedeemScraps}
-                  disabled={!bondStat || bondBalance.eq(0) || !isScrapRedeemable}
+                  disabled={!scrapStat || bondBalance.eq(0) || !isScrapRedeemable}
                   disabledDescription={!isScrapRedeemable ? `Enabled when TELO > ${BOND_REDEEM_PRICE}NEAR` : null}
                 />
               </StyledCardWrapper>
