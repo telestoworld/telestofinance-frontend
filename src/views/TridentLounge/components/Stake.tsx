@@ -15,7 +15,7 @@ import Value from '../../../components/Value';
 import useApprove, { ApprovalState } from '../../../hooks/useApprove';
 import useModal from '../../../hooks/useModal';
 import useTokenBalance from '../../../hooks/useTokenBalance';
-import useWithdrawCheck from '../../../hooks/masonry/useWithdrawCheck';
+import useWithdrawCheck from '../../../hooks/lounge/useWithdrawCheck';
 
 import { getDisplayBalance } from '../../../utils/formatBalance';
 

@@ -54,7 +54,7 @@ const Scraps: React.FC = () => {
     },
     [teloFinance, addTransaction],
   );
-  const isScrapRedeemable = useMemo(() => cashPrice.gt(BOND_REDEEM_PRICE_BN), [cashPrice]);
+  const isScrapRedeemable = useMemo(() => cashPrice.gt(SCRAP_REDEEM_PRICE_BN), [cashPrice]);
   const isScrapPurchasable = useMemo(() => Number(scrapStat?.tokenInNear) < 1.01, [scrapStat]);
 
   return (
@@ -106,7 +106,7 @@ const Scraps: React.FC = () => {
                   priceDesc={`${getDisplayBalance(bondBalance)} SCRAP Available in wallet`}
                   onExchange={handleRedeemScraps}
                   disabled={!scrapStat || bondBalance.eq(0) || !isScrapRedeemable}
-                  disabledDescription={!isScrapRedeemable ? `Enabled when TELO > ${BOND_REDEEM_PRICE}NEAR` : null}
+                  disabledDescription={!isScrapRedeemable ? `Enabled when TELO > ${SCRAP_REDEEM_PRICE}NEAR` : null}
                 />
               </StyledCardWrapper>
             </StyledScrap>

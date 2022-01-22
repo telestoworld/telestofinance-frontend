@@ -25,7 +25,7 @@ export class TeloFinance {
   config: Configuration;
   contracts: { [name: string]: Contract };
   externalTokens: { [name: string]: ERC20 };
-  masonryVersionOfUser?: string;
+  loungeVersionOfUser?: string;
 
   TELOWNEAR_LP: Contract;
   TELO: ERC20;
@@ -475,14 +475,14 @@ export class TeloFinance {
   }
 
   currentLounge(): Contract {
-    if (!this.masonryVersionOfUser) {
+    if (!this.loungeVersionOfUser) {
       //throw new Error('you must unlock the wallet to continue.');
     }
     return this.contracts.Lounge;
   }
 
   isOldLoungeMember(): boolean {
-    return this.masonryVersionOfUser !== 'latest';
+    return this.loungeVersionOfUser !== 'latest';
   }
 
   async getTokenPriceFromPancakeswap(tokenContract: ERC20): Promise<string> {
@@ -584,7 +584,7 @@ export class TeloFinance {
   async canUserUnstakeFromLounge(): Promise<boolean> {
     const Lounge = this.currentLounge();
     const canWithdraw = await Lounge.canWithdraw(this.myAccount);
-    const stakedAmount = await this.getStakedSharesOnLounge();
+    const stakedAmount = await this.getStakedMineralOnLounge();
     const notStaked = Number(getDisplayBalance(stakedAmount, this.MINERAL.decimal)) === 0;
     const result = notStaked ? true : canWithdraw;
     return result;
@@ -609,9 +609,9 @@ export class TeloFinance {
     return await Lounge.stake(decimalToBalance(amount));
   }
 
-  async getStakedSharesOnLounge(): Promise<BigNumber> {
+  async getStakedMineralOnLounge(): Promise<BigNumber> {
     const Lounge = this.currentLounge();
-    if (this.masonryVersionOfUser === 'v1') {
+    if (this.loungeVersionOfUser === 'v1') {
       return await Lounge.getMineralOf(this.myAccount);
     }
     return await Lounge.balanceOf(this.myAccount);
@@ -619,7 +619,7 @@ export class TeloFinance {
 
   async getEarningsOnLounge(): Promise<BigNumber> {
     const Lounge = this.currentLounge();
-    if (this.masonryVersionOfUser === 'v1') {
+    if (this.loungeVersionOfUser === 'v1') {
       return await Lounge.getCashEarningsOf(this.myAccount);
     }
     return await Lounge.earned(this.myAccount);
@@ -632,7 +632,7 @@ export class TeloFinance {
 
   async collectCashFromLounge(): Promise<TransactionResponse> {
     const Lounge = this.currentLounge();
-    if (this.masonryVersionOfUser === 'v1') {
+    if (this.loungeVersionOfUser === 'v1') {
       return await Lounge.claimDividends();
     }
     return await Lounge.claimReward();
@@ -701,7 +701,7 @@ export class TeloFinance {
     const withdrawLockupEpochs = await Lounge.withdrawLockupEpochs();
     const fromDate = new Date(Date.now());
     const targetEpochForClaimUnlock = Number(startTimeEpoch) + Number(withdrawLockupEpochs);
-    const stakedAmount = await this.getStakedSharesOnLounge();
+    const stakedAmount = await this.getStakedMineralOnLounge();
     if (currentEpoch <= targetEpochForClaimUnlock && Number(stakedAmount) === 0) {
       return { from: fromDate, to: fromDate };
     } else if (targetEpochForClaimUnlock - currentEpoch === 1) {
