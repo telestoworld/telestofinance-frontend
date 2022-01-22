@@ -10,14 +10,14 @@ import ExchangeCard from './components/ExchangeCard';
 import styled from 'styled-components';
 import Spacer from '../../components/Spacer';
 import useBondStats from '../../hooks/useBondStats';
-import useTombFinance from '../../hooks/useTombFinance';
+import useTeloFinance from '../../hooks/useTeloFinance';
 import useCashPriceInLastTWAP from '../../hooks/useCashPriceInLastTWAP';
 import { useTransactionAdder } from '../../state/transactions/hooks';
 import ExchangeStat from './components/ExchangeStat';
 import useTokenBalance from '../../hooks/useTokenBalance';
 import useBondsPurchasable from '../../hooks/useBondsPurchasable';
 import { getDisplayBalance } from '../../utils/formatBalance';
-import { BOND_REDEEM_PRICE, BOND_REDEEM_PRICE_BN } from '../../telesto-finance/constants';
+import { BOND_REDEEM_PRICE, BOND_REDEEM_PRICE_BN } from '../../telo-finance/constants';
 
 const BackgroundImage = createGlobalStyle`
   body {
@@ -29,30 +29,30 @@ const BackgroundImage = createGlobalStyle`
 const Bonds: React.FC = () => {
   const { path } = useRouteMatch();
   const { account } = useWallet();
-  const tombFinance = useTombFinance();
+  const teloFinance = useTeloFinance();
   const addTransaction = useTransactionAdder();
   const bondStat = useBondStats();
   const cashPrice = useCashPriceInLastTWAP();
   const bondsPurchasable = useBondsPurchasable();
 
-  const bondBalance = useTokenBalance(tombFinance?.TBOND);
+  const bondBalance = useTokenBalance(teloFinance?.TBOND);
 
   const handleBuyBonds = useCallback(
     async (amount: string) => {
-      const tx = await tombFinance.buyBonds(amount);
+      const tx = await teloFinance.buyBonds(amount);
       addTransaction(tx, {
         summary: `Buy ${Number(amount).toFixed(2)} TBOND with ${amount} TOMB`,
       });
     },
-    [tombFinance, addTransaction],
+    [teloFinance, addTransaction],
   );
 
   const handleRedeemBonds = useCallback(
     async (amount: string) => {
-      const tx = await tombFinance.redeemBonds(amount);
+      const tx = await teloFinance.redeemBonds(amount);
       addTransaction(tx, { summary: `Redeem ${amount} TBOND` });
     },
-    [tombFinance, addTransaction],
+    [teloFinance, addTransaction],
   );
   const isBondRedeemable = useMemo(() => cashPrice.gt(BOND_REDEEM_PRICE_BN), [cashPrice]);
   const isBondPurchasable = useMemo(() => Number(bondStat?.tokenInFtm) < 1.01, [bondStat]);
@@ -70,9 +70,9 @@ const Bonds: React.FC = () => {
               <StyledCardWrapper>
                 <ExchangeCard
                   action="Purchase"
-                  fromToken={tombFinance.TOMB}
+                  fromToken={teloFinance.TOMB}
                   fromTokenName="TOMB"
-                  toToken={tombFinance.TBOND}
+                  toToken={teloFinance.TBOND}
                   toTokenName="TBOND"
                   priceDesc={
                     !isBondPurchasable
@@ -99,9 +99,9 @@ const Bonds: React.FC = () => {
               <StyledCardWrapper>
                 <ExchangeCard
                   action="Redeem"
-                  fromToken={tombFinance.TBOND}
+                  fromToken={teloFinance.TBOND}
                   fromTokenName="TBOND"
-                  toToken={tombFinance.TOMB}
+                  toToken={teloFinance.TOMB}
                   toTokenName="TOMB"
                   priceDesc={`${getDisplayBalance(bondBalance)} TBOND Available in wallet`}
                   onExchange={handleRedeemBonds}

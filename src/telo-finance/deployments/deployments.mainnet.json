@@ -9399,7 +9399,7 @@
       },
       {
         "inputs": [],
-        "name": "wftm",
+        "name": "wnear",
         "outputs": [
           {
             "internalType": "address",

@@ -17,7 +17,7 @@ const useEstimateMineral = (scrapAmount: string) => {
 
   useEffect(() => {
     if (account) {
-      estimateAmountOfMineral().catch((err) => console.error(`Failed to get estimateAmountOfTShare: ${err.stack}`));
+      estimateAmountOfMineral().catch((err) => console.error(`Failed to get estimateAmountOfMineral: ${err.stack}`));
     }
   }, [account, estimateAmountOfMineral]);
 

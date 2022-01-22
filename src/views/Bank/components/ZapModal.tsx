@@ -100,7 +100,7 @@ const ZapModal: React.FC<ZapProps> = ({ onConfirm, onDismiss, tokenName = '', de
       >
         <StyledMenuItem value={NEAR_TICKER}>NEAR</StyledMenuItem>
         <StyledMenuItem value={MINERAL_TICKER}>MINERAL</StyledMenuItem>
-        {/* Tomb as an input for zapping will be disabled due to issues occuring with the Gatekeeper system */}
+        {/* Telo as an input for zapping will be disabled due to issues occuring with the Gatekeeper system */}
         {/* <StyledMenuItem value={TOMB_TICKER}>TOMB</StyledMenuItem> */}
       </Select>
       <TokenInput

@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
 import { BigNumber } from 'ethers';
-import useTombFinance from './useTombFinance';
+import useTeloFinance from './useTeloFinance';
 import useRefresh from './useRefresh';
 
-const useEarningsOnMasonry = () => {
+const useEarningsOnLounge = () => {
   const { slowRefresh } = useRefresh();
   const [balance, setBalance] = useState(BigNumber.from(0));
-  const tombFinance = useTombFinance();
-  const isUnlocked = tombFinance?.isUnlocked;
+  const teloFinance = useTeloFinance();
+  const isUnlocked = teloFinance?.isUnlocked;
 
   useEffect(() => {
     async function fetchBalance() {
       try {
-        setBalance(await tombFinance.getEarningsOnMasonry());
+        setBalance(await teloFinance.getEarningsOnLounge());
       } catch (e) {
         console.error(e);
       }
@@ -20,9 +20,9 @@ const useEarningsOnMasonry = () => {
     if (isUnlocked) {
       fetchBalance();
     }
-  }, [isUnlocked, tombFinance, slowRefresh]);
+  }, [isUnlocked, teloFinance, slowRefresh]);
 
   return balance;
 };
 
-export default useEarningsOnMasonry;
+export default useEarningsOnLounge;

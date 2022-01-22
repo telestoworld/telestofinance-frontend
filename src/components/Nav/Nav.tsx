@@ -95,7 +95,7 @@ const Nav = () => {
         {matches ? (
           <>
             <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
-              {/* <a className={ classes.brandLink } href="/">Tomb Finance</a> */}
+              {/* <a className={ classes.brandLink } href="/">Telo Finance</a> */}
               <Link to="/" color="inherit" className={classes.brandLink}>
                 Telesto Finance
               </Link>
@@ -122,7 +122,7 @@ const Nav = () => {
               <Link color="textPrimary" to="/regulations" className={classes.link}>
                 Regulations
               </Link>
-              <a href="https://docs.tomb.finance" className={classes.link}>
+              <a href="https://telesto.gitbook.io/telesto/" className={classes.link}>
                 Docs
               </a>
             </Box>

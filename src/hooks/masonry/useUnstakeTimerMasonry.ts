@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import useTeloFinance from './../useTeloFinance';
 import { AllocationTime } from '../../telo-finance/types';
 
-const useUnstakeTimerMasonry = () => {
+const useUnstakeTimerLounge = () => {
   const [time, setTime] = useState<AllocationTime>({
     from: new Date(),
     to: new Date(),
@@ -17,4 +17,4 @@ const useUnstakeTimerMasonry = () => {
   return time;
 };
 
-export default useUnstakeTimerMasonry;
+export default useUnstakeTimerLounge;

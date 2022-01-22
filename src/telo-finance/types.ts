@@ -27,7 +27,7 @@ export type PoolStats = {
 };
 
 export type TokenStat = {
-  tokenInFtm: string;
+  tokenInNear: string;
   priceInDollars: string;
   totalSupply: string;
   circulatingSupply: string;
@@ -35,7 +35,7 @@ export type TokenStat = {
 
 export type LPStat = {
   tokenAmount: string;
-  ftmAmount: string;
+  nearAmount: string;
   priceOfOne: string;
   totalLiquidity: string;
   totalSupply: string;
@@ -46,10 +46,10 @@ export type AllocationTime = {
   to: Date;
 };
 
-export type TShareSwapperStat = {
-  tshareBalance: string;
-  tbondBalance: string;
-  // tombPrice: string;
+export type MineralSwapperStat = {
+  mineralBalance: string;
+  scrapBalance: string;
+  // teloPrice: string;
   // tsharePrice: string;
-  rateTSharePerTomb: string;
+  rateMineralPerTelo: string;
 };

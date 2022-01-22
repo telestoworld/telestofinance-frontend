@@ -10,26 +10,26 @@ import Label from '../../../components/Label';
 import Value from '../../../components/Value';
 
 import useEarnings from '../../../hooks/useEarnings';
-import useHarvest from '../../../hooks/useHarvest';
+import useCollect from '../../../hooks/useCollect';
 
 import { getDisplayBalance } from '../../../utils/formatBalance';
 import TokenSymbol from '../../../components/TokenSymbol';
-import { Bank } from '../../../tomb-finance';
-import useTombStats from '../../../hooks/useTombStats';
-import useShareStats from '../../../hooks/usetShareStats';
+import { Bank } from '../../../telo-finance';
+import useTeloStats from '../../../hooks/useTeloStats';
+import useMineralStats from '../../../hooks/useMineralStats';
 
-interface HarvestProps {
+interface CollectProps {
   bank: Bank;
 }
 
-const Harvest: React.FC<HarvestProps> = ({ bank }) => {
+const Collect: React.FC<CollectProps> = ({ bank }) => {
   const earnings = useEarnings(bank.contract, bank.earnTokenName, bank.poolId);
-  const { onReward } = useHarvest(bank);
-  const tombStats = useTombStats();
-  const tShareStats = useShareStats();
+  const { onReward } = useCollect(bank);
+  const teloStats = useTeloStats();
+  const mineralStats = useMineralStats();
 
-  const tokenName = bank.earnTokenName === 'TSHARE' ? 'TSHARE' : 'TOMB';
-  const tokenStats = bank.earnTokenName === 'TSHARE' ? tShareStats : tombStats;
+  const tokenName = bank.earnTokenName === 'MINERAL' ? 'MINERAL' : 'TELO';
+  const tokenStats = bank.earnTokenName === 'MINERAL' ? mineralStats : teloStats;
   const tokenPriceInDollars = useMemo(
     () => (tokenStats ? Number(tokenStats.priceInDollars).toFixed(2) : null),
     [tokenStats],
@@ -78,4 +78,4 @@ const StyledCardContentInner = styled.div`
   justify-content: space-between;
 `;
 
-export default Harvest;
+export default Collect;

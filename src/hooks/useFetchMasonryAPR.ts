@@ -1,24 +1,24 @@
 import { useEffect, useState } from 'react';
-import useTombFinance from './useTombFinance';
+import useTeloFinance from './useTeloFinance';
 import useRefresh from './useRefresh';
 
-const useFetchMasonryAPR = () => {
+const useFetchLoungeAPR = () => {
   const [apr, setApr] = useState<number>(0);
-  const tombFinance = useTombFinance();
+  const teloFinance = useTeloFinance();
   const { slowRefresh } = useRefresh(); 
 
   useEffect(() => {
-    async function fetchMasonryAPR() {
+    async function fetchLoungeAPR() {
       try {
-        setApr(await tombFinance.getMasonryAPR());
+        setApr(await teloFinance.getLoungeAPR());
       } catch(err){
         console.error(err);
       }
     }
-   fetchMasonryAPR();
-  }, [setApr, tombFinance, slowRefresh]);
+   fetchLoungeAPR();
+  }, [setApr, teloFinance, slowRefresh]);
 
   return apr;
 };
 
-export default useFetchMasonryAPR;
+export default useFetchLoungeAPR;

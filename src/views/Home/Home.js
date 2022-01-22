@@ -16,8 +16,8 @@ import useZap from '../../hooks/useZap';
 import useBondStats from '../../hooks/useBondStats';
 import useMineralStats from '../../hooks/useMineralStats';
 import useTotalValueLocked from '../../hooks/useTotalValueLocked';
-import { telo as teloTesting, mineral as mineralTesting } from '../../telesto-finance/deployments/deployments.testing.json';
-import { telo as teloProd, mineral as mineralProd } from '../../telesto-finance/deployments/deployments.mainnet.json';
+import { telo as teloTesting, mineral as mineralTesting } from '../../telo-finance/deployments/deployments.testing.json';
+import { telo as teloProd, mineral as mineralProd } from '../../telo-finance/deployments/deployments.mainnet.json';
 
 import MetamaskFox from '../../assets/img/metamask-fox.svg';
 
@@ -336,7 +336,7 @@ const Home = () => {
               <Box mt={2}>
                 <span style={{ fontSize: '26px' }}>
                   {teloLPStats?.tokenAmount ? teloLPStats?.tokenAmount : '-.--'} TELO /{' '}
-                  {teloLPStats?.ftmAmount ? teloLPStats?.ftmAmount : '-.--'} NEAR
+                  {teloLPStats?.nearAmount ? teloLPStats?.nearAmount : '-.--'} NEAR
                 </span>
               </Box>
               <Box>${teloLPStats?.priceOfOne ? teloLPStats.priceOfOne : '-.--'}</Box>

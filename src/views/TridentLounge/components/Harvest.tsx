@@ -7,28 +7,28 @@ import TokenSymbol from '../../../components/TokenSymbol';
 import Label from '../../../components/Label';
 import Value from '../../../components/Value';
 import CardIcon from '../../../components/CardIcon';
-import useClaimRewardTimerMasonry from '../../../hooks/masonry/useClaimRewardTimerMasonry';
+import useClaimRewardTimerLounge from '../../../hooks/masonry/useClaimRewardTimerLounge';
 import useClaimRewardCheck from '../../../hooks/masonry/useClaimRewardCheck';
-import ProgressCountdown from './../components/ProgressCountdown';
-import useHarvestFromMasonry from '../../../hooks/useHarvestFromMasonry';
-import useEarningsOnMasonry from '../../../hooks/useEarningsOnMasonry';
-import useTombStats from '../../../hooks/useTombStats';
+import ProgressCountdown from './ProgressCountdown';
+import useCollectFromLounge from '../../../hooks/useCollectFromLounge';
+import useEarningsOnLounge from '../../../hooks/useEarningsOnLounge';
+import useTeloStats from '../../../hooks/useTeloStats';
 import { getDisplayBalance } from '../../../utils/formatBalance';
 
-const Harvest: React.FC = () => {
-  const tombStats = useTombStats();
-  const { onReward } = useHarvestFromMasonry();
-  const earnings = useEarningsOnMasonry();
+const Collect: React.FC = () => {
+  const teloStats = useTeloStats();
+  const { onReward } = useCollectFromLounge();
+  const earnings = useEarningsOnLounge();
   const canClaimReward = useClaimRewardCheck();
 
   const tokenPriceInDollars = useMemo(
-    () => (tombStats ? Number(tombStats.priceInDollars).toFixed(2) : null),
-    [tombStats],
+    () => (teloStats ? Number(teloStats.priceInDollars).toFixed(2) : null),
+    [teloStats],
   );
 
   const earnedInDollars = (Number(tokenPriceInDollars) * Number(getDisplayBalance(earnings))).toFixed(2);
 
-  const { from, to } = useClaimRewardTimerMasonry();
+  const { from, to } = useClaimRewardTimerLounge();
 
   return (
     <Box>
@@ -92,4 +92,4 @@ const StyledCardContentInner = styled.div`
   justify-content: space-between;
 `;
 
-export default Harvest;
+export default Collect;

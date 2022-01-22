@@ -3,7 +3,7 @@ import { useWallet } from 'use-wallet';
 import moment from 'moment';
 import styled from 'styled-components';
 import Spacer from '../../components/Spacer';
-import Harvest from './components/Harvest';
+import Collect from './components/Collect';
 import Stake from './components/Stake';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -14,24 +14,24 @@ import { Alert } from '@material-ui/lab';
 import UnlockWallet from '../../components/UnlockWallet';
 import Page from '../../components/Page';
 
-import useRedeemOnMasonry from '../../hooks/useRedeemOnMasonry';
-import useStakedBalanceOnMasonry from '../../hooks/useStakedBalanceOnMasonry';
+import useRedeemOnLounge from '../../hooks/useRedeemOnLounge';
+import useStakedBalanceOnLounge from '../../hooks/useStakedBalanceOnLounge';
 import { getDisplayBalance } from '../../utils/formatBalance';
 import useCurrentEpoch from '../../hooks/useCurrentEpoch';
-import useFetchMasonryAPR from '../../hooks/useFetchMasonryAPR';
+import useFetchLoungeAPR from '../../hooks/useFetchLoungeAPR';
 
 import useCashPriceInEstimatedTWAP from '../../hooks/useCashPriceInEstimatedTWAP';
 import useTreasuryAllocationTimes from '../../hooks/useTreasuryAllocationTimes';
-import useTotalStakedOnMasonry from '../../hooks/useTotalStakedOnMasonry';
+import useTotalStakedOnLounge from '../../hooks/useTotalStakedOnLounge';
 import useClaimRewardCheck from '../../hooks/masonry/useClaimRewardCheck';
 import useWithdrawCheck from '../../hooks/masonry/useWithdrawCheck';
 import ProgressCountdown from './components/ProgressCountdown';
-import MasonryImage from '../../assets/img/masonry.png';
+import LoungeImage from '../../assets/img/masonry.png';
 import { createGlobalStyle } from 'styled-components';
 
 const BackgroundImage = createGlobalStyle`
   body, html {
-    background: url(${MasonryImage}) no-repeat !important;
+    background: url(${LoungeImage}) no-repeat !important;
     background-size: cover !important;
   }
 `;
@@ -45,15 +45,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Masonry = () => {
+const Lounge = () => {
   const classes = useStyles();
   const { account } = useWallet();
-  const { onRedeem } = useRedeemOnMasonry();
-  const stakedBalance = useStakedBalanceOnMasonry();
+  const { onRedeem } = useRedeemOnLounge();
+  const stakedBalance = useStakedBalanceOnLounge();
   const currentEpoch = useCurrentEpoch();
   const cashStat = useCashPriceInEstimatedTWAP();
-  const totalStaked = useTotalStakedOnMasonry();
-  const masonryAPR = useFetchMasonryAPR();
+  const totalStaked = useTotalStakedOnLounge();
+  const masonryAPR = useFetchLoungeAPR();
   const canClaimReward = useClaimRewardCheck();
   const canWithdraw = useWithdrawCheck();
   const scalingFactor = useMemo(() => (cashStat ? Number(cashStat.priceInDollars).toFixed(4) : null), [cashStat]);
@@ -65,7 +65,7 @@ const Masonry = () => {
       {!!account ? (
         <>
           <Typography color="textPrimary" align="center" variant="h3" gutterBottom>
-            Masonry
+            Lounge
           </Typography>
           <Box mt={5}>
             <Grid container justify="center" spacing={3}>
@@ -125,7 +125,7 @@ const Masonry = () => {
               <StyledBoardroom>
                 <StyledCardsWrapper>
                   <StyledCardWrapper>
-                    <Harvest />
+                    <Collect />
                   </StyledCardWrapper>
                   <Spacer />
                   <StyledCardWrapper>
@@ -214,4 +214,4 @@ const StyledCardWrapper = styled.div`
   }
 `;
 
-export default Masonry;
+export default Lounge;

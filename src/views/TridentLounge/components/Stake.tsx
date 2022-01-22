@@ -23,20 +23,20 @@ import DepositModal from './DepositModal';
 import WithdrawModal from './WithdrawModal';
 import useTeloFinance from '../../../hooks/useTeloFinance';
 import ProgressCountdown from './ProgressCountdown';
-import useStakedBalanceOnMasonry from '../../../hooks/useStakedBalanceOnMasonry';
+import useStakedBalanceOnLounge from '../../../hooks/useStakedBalanceOnLounge';
 import useStakedTokenPriceInDollars from '../../../hooks/useStakedTokenPriceInDollars';
-import useUnstakeTimerMasonry from '../../../hooks/masonry/useUnstakeTimerMasonry';
+import useUnstakeTimerLounge from '../../../hooks/masonry/useUnstakeTimerLounge';
 import TokenSymbol from '../../../components/TokenSymbol';
-import useStakeToMasonry from '../../../hooks/useStakeToMasonry';
-import useWithdrawFromMasonry from '../../../hooks/useWithdrawFromMasonry';
+import useStakeToLounge from '../../../hooks/useStakeToLounge';
+import useWithdrawFromLounge from '../../../hooks/useWithdrawFromLounge';
 
 const Stake: React.FC = () => {
   const teloFinance = useTeloFinance();
-  const [approveStatus, approve] = useApprove(teloFinance.MINERAL, teloFinance.contracts.Masonry.address);
+  const [approveStatus, approve] = useApprove(teloFinance.MINERAL, teloFinance.contracts.Lounge.address);
 
   const tokenBalance = useTokenBalance(teloFinance.MINERAL);
-  const stakedBalance = useStakedBalanceOnMasonry();
-  const { from, to } = useUnstakeTimerMasonry();
+  const stakedBalance = useStakedBalanceOnLounge();
+  const { from, to } = useUnstakeTimerLounge();
 
   const stakedTokenPriceInDollars = useStakedTokenPriceInDollars('MINERAL', teloFinance.MINERAL);
   const tokenPriceInDollars = useMemo(
@@ -48,9 +48,9 @@ const Stake: React.FC = () => {
   );
   // const isOldBoardroomMember = boardroomVersion !== 'latest';
 
-  const { onStake } = useStakeToMasonry();
-  const { onWithdraw } = useWithdrawFromMasonry();
-  const canWithdrawFromMasonry = useWithdrawCheck();
+  const { onStake } = useStakeToLounge();
+  const { onWithdraw } = useWithdrawFromLounge();
+  const canWithdrawFromLounge = useWithdrawCheck();
 
   const [onPresentDeposit, onDismissDeposit] = useModal(
     <DepositModal
@@ -100,7 +100,7 @@ const Stake: React.FC = () => {
                 </Button>
               ) : (
                 <>
-                  <IconButton disabled={!canWithdrawFromMasonry} onClick={onPresentWithdraw}>
+                  <IconButton disabled={!canWithdrawFromLounge} onClick={onPresentWithdraw}>
                     <RemoveIcon />
                   </IconButton>
                   <StyledActionSpacer />
@@ -114,7 +114,7 @@ const Stake: React.FC = () => {
         </CardContent>
       </Card>
       <Box mt={2} style={{ color: '#FFF' }}>
-        {canWithdrawFromMasonry ? (
+        {canWithdrawFromLounge ? (
           ''
         ) : (
           <Card>

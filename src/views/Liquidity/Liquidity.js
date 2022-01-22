@@ -4,15 +4,15 @@ import { createGlobalStyle } from 'styled-components';
 import HomeImage from '../../assets/img/home.png';
 import useLpStats from '../../hooks/useLpStats';
 import { Box, Button, Grid, Paper, Typography } from '@material-ui/core';
-import useTombStats from '../../hooks/useTombStats';
+import useTeloStats from '../../hooks/useTeloStats';
 import TokenInput from '../../components/TokenInput';
-import useTombFinance from '../../hooks/useTombFinance';
+import useTeloFinance from '../../hooks/useTeloFinance';
 import { useWallet } from 'use-wallet';
 import useTokenBalance from '../../hooks/useTokenBalance';
 import { getDisplayBalance } from '../../utils/formatBalance';
 import useApproveTaxOffice from '../../hooks/useApproveTaxOffice';
 import { ApprovalState } from '../../hooks/useApprove';
-import useProvideTombFtmLP from '../../hooks/useProvideTombFtmLP';
+import useProvideTeloFtmLP from '../../hooks/useProvideTeloNearLP';
 import { Alert } from '@material-ui/lab';
 
 const BackgroundImage = createGlobalStyle`
@@ -26,32 +26,32 @@ function isNumeric(n) {
 }
 
 const ProvideLiquidity = () => {
-  const [tombAmount, setTombAmount] = useState(0);
-  const [ftmAmount, setFtmAmount] = useState(0);
+  const [teloAmount, setTeloAmount] = useState(0);
+  const [nearAmount, setFtmAmount] = useState(0);
   const [lpTokensAmount, setLpTokensAmount] = useState(0);
   const { balance } = useWallet();
-  const tombStats = useTombStats();
-  const tombFinance = useTombFinance();
+  const teloStats = useTeloStats();
+  const teloFinance = useTeloFinance();
   const [approveTaxOfficeStatus, approveTaxOffice] = useApproveTaxOffice();
-  const tombBalance = useTokenBalance(tombFinance.TOMB);
-  const ftmBalance = (balance / 1e18).toFixed(4);
-  const { onProvideTombFtmLP } = useProvideTombFtmLP();
-  const tombFtmLpStats = useLpStats('TOMB-FTM-LP');
+  const teloBalance = useTokenBalance(teloFinance.TOMB);
+  const nearBalance = (balance / 1e18).toFixed(4);
+  const { onProvideTeloFtmLP } = useProvideTeloFtmLP();
+  const teloFtmLpStats = useLpStats('TOMB-FTM-LP');
 
-  const tombLPStats = useMemo(() => (tombFtmLpStats ? tombFtmLpStats : null), [tombFtmLpStats]);
-  const tombPriceInFTM = useMemo(() => (tombStats ? Number(tombStats.tokenInFtm).toFixed(2) : null), [tombStats]);
-  const ftmPriceInTOMB = useMemo(() => (tombStats ? Number(1 / tombStats.tokenInFtm).toFixed(2) : null), [tombStats]);
+  const teloLPStats = useMemo(() => (teloFtmLpStats ? teloFtmLpStats : null), [teloFtmLpStats]);
+  const teloPriceInFTM = useMemo(() => (teloStats ? Number(teloStats.tokenInFtm).toFixed(2) : null), [teloStats]);
+  const nearPriceInTOMB = useMemo(() => (teloStats ? Number(1 / teloStats.tokenInFtm).toFixed(2) : null), [teloStats]);
   // const classes = useStyles();
 
-  const handleTombChange = async (e) => {
+  const handleTeloChange = async (e) => {
     if (e.currentTarget.value === '' || e.currentTarget.value === 0) {
-      setTombAmount(e.currentTarget.value);
+      setTeloAmount(e.currentTarget.value);
     }
     if (!isNumeric(e.currentTarget.value)) return;
-    setTombAmount(e.currentTarget.value);
-    const quoteFromSpooky = await tombFinance.quoteFromSpooky(e.currentTarget.value, 'TOMB');
+    setTeloAmount(e.currentTarget.value);
+    const quoteFromSpooky = await teloFinance.quoteFromSpooky(e.currentTarget.value, 'TOMB');
     setFtmAmount(quoteFromSpooky);
-    setLpTokensAmount(quoteFromSpooky / tombLPStats.ftmAmount);
+    setLpTokensAmount(quoteFromSpooky / teloLPStats.nearAmount);
   };
 
   const handleFtmChange = async (e) => {
@@ -60,22 +60,22 @@ const ProvideLiquidity = () => {
     }
     if (!isNumeric(e.currentTarget.value)) return;
     setFtmAmount(e.currentTarget.value);
-    const quoteFromSpooky = await tombFinance.quoteFromSpooky(e.currentTarget.value, 'FTM');
-    setTombAmount(quoteFromSpooky);
+    const quoteFromSpooky = await teloFinance.quoteFromSpooky(e.currentTarget.value, 'FTM');
+    setTeloAmount(quoteFromSpooky);
 
-    setLpTokensAmount(quoteFromSpooky / tombLPStats.tokenAmount);
+    setLpTokensAmount(quoteFromSpooky / teloLPStats.tokenAmount);
   };
-  const handleTombSelectMax = async () => {
-    const quoteFromSpooky = await tombFinance.quoteFromSpooky(getDisplayBalance(tombBalance), 'TOMB');
-    setTombAmount(getDisplayBalance(tombBalance));
+  const handleTeloSelectMax = async () => {
+    const quoteFromSpooky = await teloFinance.quoteFromSpooky(getDisplayBalance(teloBalance), 'TOMB');
+    setTeloAmount(getDisplayBalance(teloBalance));
     setFtmAmount(quoteFromSpooky);
-    setLpTokensAmount(quoteFromSpooky / tombLPStats.ftmAmount);
+    setLpTokensAmount(quoteFromSpooky / teloLPStats.nearAmount);
   };
   const handleFtmSelectMax = async () => {
-    const quoteFromSpooky = await tombFinance.quoteFromSpooky(ftmBalance, 'FTM');
-    setFtmAmount(ftmBalance);
-    setTombAmount(quoteFromSpooky);
-    setLpTokensAmount(ftmBalance / tombLPStats.ftmAmount);
+    const quoteFromSpooky = await teloFinance.quoteFromSpooky(nearBalance, 'FTM');
+    setFtmAmount(nearBalance);
+    setTeloAmount(quoteFromSpooky);
+    setLpTokensAmount(nearBalance / teloLPStats.nearAmount);
   };
   return (
     <Page>
@@ -97,10 +97,10 @@ const ProvideLiquidity = () => {
                     <Grid container>
                       <Grid item xs={12}>
                         <TokenInput
-                          onSelectMax={handleTombSelectMax}
-                          onChange={handleTombChange}
-                          value={tombAmount}
-                          max={getDisplayBalance(tombBalance)}
+                          onSelectMax={handleTeloSelectMax}
+                          onChange={handleTeloChange}
+                          value={teloAmount}
+                          max={getDisplayBalance(teloBalance)}
                           symbol={'TOMB'}
                         ></TokenInput>
                       </Grid>
@@ -108,21 +108,21 @@ const ProvideLiquidity = () => {
                         <TokenInput
                           onSelectMax={handleFtmSelectMax}
                           onChange={handleFtmChange}
-                          value={ftmAmount}
-                          max={ftmBalance}
+                          value={nearAmount}
+                          max={nearBalance}
                           symbol={'FTM'}
                         ></TokenInput>
                       </Grid>
                       <Grid item xs={12}>
-                        <p>1 TOMB = {tombPriceInFTM} FTM</p>
-                        <p>1 FTM = {ftmPriceInTOMB} TOMB</p>
+                        <p>1 TELO = {teloPriceInNEAR} NEAR</p>
+                        <p>1 NEAR = {nearPriceInTELO} TELO</p>
                         <p>LP tokens ≈ {lpTokensAmount.toFixed(2)}</p>
                       </Grid>
                       <Grid xs={12} justifyContent="center" style={{ textAlign: 'center' }}>
                         {approveTaxOfficeStatus === ApprovalState.APPROVED ? (
                           <Button
                             variant="contained"
-                            onClick={() => onProvideTombFtmLP(ftmAmount.toString(), tombAmount.toString())}
+                            onClick={() => onProvideTeloFtmLP(nearAmount.toString(), teloAmount.toString())}
                             color="primary"
                             style={{ margin: '0 10px', color: '#fff' }}
                           >

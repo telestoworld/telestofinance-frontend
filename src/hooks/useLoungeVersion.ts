@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import useTeloFinance from './useTeloFinance';
 import useStakedBalanceOnLounge from './useStakedBalanceOnLounge';
 
-const useMasonryVersion = () => {
+const useLoungeVersion = () => {
   const [loungeVersion, setLoungeVersion] = useState('latest');
   const teloFinance = useTeloFinance();
   const stakedBalance = useStakedBalanceOnLounge();
@@ -20,4 +20,4 @@ const useMasonryVersion = () => {
   return loungeVersion;
 };
 
-export default useMasonryVersion;
+export default useLoungeVersion;

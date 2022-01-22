@@ -11,7 +11,7 @@ const useStakedBalanceOnLounge = () => {
   useEffect(() => {
     async function fetchBalance() {
       try {
-        setBalance(await teloFinance.getStakedSharesOnLounge());
+        setBalance(await teloFinance.getStakedMineralOnLounge());
       } catch (e) {
         console.error(e);
       }

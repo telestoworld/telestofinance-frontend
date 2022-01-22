@@ -10,7 +10,7 @@ import { Box, Button, Card, CardContent, Typography, Grid } from '@material-ui/c
 import PageHeader from '../../components/PageHeader';
 import Spacer from '../../components/Spacer';
 import UnlockWallet from '../../components/UnlockWallet';
-import Harvest from './components/Harvest';
+import Collect from './components/Collect';
 import Stake from './components/Stake';
 import useBank from '../../hooks/useBank';
 import useStatsForPool from '../../hooks/useStatsForPool';
@@ -75,7 +75,7 @@ const Bank: React.FC = () => {
         <StyledBank>
           <StyledCardsWrapper>
             <StyledCardWrapper>
-              <Harvest bank={bank} />
+              <Collect bank={bank} />
             </StyledCardWrapper>
             <Spacer />
             <StyledCardWrapper>{<Stake bank={bank} />}</StyledCardWrapper>

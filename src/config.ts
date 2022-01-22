@@ -63,77 +63,77 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
   finished: will disable the pool on the UI if set to true
   sort: the order of the pool
   */
-  TombFtmRewardPool: {
+  TeloFtmRewardPool: {
     name: 'Earn TOMB by FTM',
     poolId: 0,
     sectionInUI: 0,
-    contract: 'TombFtmRewardPool',
+    contract: 'TeloFtmRewardPool',
     depositTokenName: 'WFTM',
     earnTokenName: 'TOMB',
     finished: false,
     sort: 1,
     closedForStaking: true,
   },
-  TombBooRewardPool: {
+  TeloBooRewardPool: {
     name: 'Earn TOMB by BOO',
     poolId: 1,
     sectionInUI: 0,
-    contract: 'TombBooGenesisRewardPool',
+    contract: 'TeloBooGenesisRewardPool',
     depositTokenName: 'BOO',
     earnTokenName: 'TOMB',
     finished: false,
     sort: 2,
     closedForStaking: true,
   },
-  TombShibaRewardPool: {
+  TeloShibaRewardPool: {
     name: 'Earn TOMB by SHIBA',
     poolId: 2,
     sectionInUI: 0,
-    contract: 'TombShibaGenesisRewardPool',
+    contract: 'TeloShibaGenesisRewardPool',
     depositTokenName: 'SHIBA',
     earnTokenName: 'TOMB',
     finished: false,
     sort: 3,
     closedForStaking: true,
   },
-  TombZooRewardPool: {
+  TeloZooRewardPool: {
     name: 'Earn TOMB by ZOO',
     poolId: 3,
     sectionInUI: 0,
-    contract: 'TombZooGenesisRewardPool',
+    contract: 'TeloZooGenesisRewardPool',
     depositTokenName: 'ZOO',
     earnTokenName: 'TOMB',
     finished: false,
     sort: 4,
     closedForStaking: true,
   },
-  TombFtmLPTombRewardPool: {
+  TeloFtmLPTeloRewardPool: {
     name: 'Earn TOMB by TOMB-FTM LP',
     poolId: 0,
     sectionInUI: 1,
-    contract: 'TombFtmLpTombRewardPool',
+    contract: 'TeloFtmLpTeloRewardPool',
     depositTokenName: 'TOMB-FTM-LP',
     earnTokenName: 'TOMB',
     finished: false,
     sort: 5,
     closedForStaking: true,
   },
-  TombFtmLPTombRewardPoolOld: {
+  TeloFtmLPTeloRewardPoolOld: {
     name: 'Earn TOMB by TOMB-FTM LP',
     poolId: 0,
     sectionInUI: 1,
-    contract: 'TombFtmLpTombRewardPoolOld',
+    contract: 'TeloFtmLpTeloRewardPoolOld',
     depositTokenName: 'TOMB-FTM-LP',
     earnTokenName: 'TOMB',
     finished: true,
     sort: 9,
     closedForStaking: true,
   },
-  TombFtmLPTShareRewardPool: {
+  TeloFtmLPTShareRewardPool: {
     name: 'Earn TSHARE by TOMB-FTM LP',
     poolId: 0,
     sectionInUI: 2,
-    contract: 'TombFtmLPTShareRewardPool',
+    contract: 'TeloFtmLPTShareRewardPool',
     depositTokenName: 'TOMB-FTM-LP',
     earnTokenName: 'TSHARE',
     finished: false,

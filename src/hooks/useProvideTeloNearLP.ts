@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import useTeloFinance from './useTeloFinance';
 import useHandleTransactionReceipt from './useHandleTransactionReceipt';
 import { parseUnits } from 'ethers/lib/utils';
-import { TAX_OFFICE_ADDR } from './../utils/constants'
+import { TAX_OFFICE_ADDR } from '../utils/constants'
 
 const useProvideTeloNearLP = () => {
   const teloFinance = useTeloFinance();
@@ -13,7 +13,7 @@ const useProvideTeloNearLP = () => {
       const teloAmountBn = parseUnits(teloAmount);
       handleTransactionReceipt(
         teloFinance.provideTeloNearLP(nearAmount, teloAmountBn),
-        `Provide Tomb-FTM LP ${teloAmount} ${nearAmount} using ${TAX_OFFICE_ADDR}`,
+        `Provide Telo-NEAR LP ${teloAmount} ${nearAmount} using ${TAX_OFFICE_ADDR}`,
       );
     },
     [teloFinance, handleTransactionReceipt],
