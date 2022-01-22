@@ -1,6 +1,6 @@
 import React, { /*useCallback, useEffect, */useMemo, useState } from 'react';
 import Page from '../../components/Page';
-import BondsImage from '../../assets/img/bonds.png';
+import ScrapsImage from '../../assets/img/bonds.png';
 import { createGlobalStyle } from 'styled-components';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import { useWallet } from 'use-wallet';
@@ -22,7 +22,7 @@ import TokenSymbol from '../../components/TokenSymbol';
 
 const BackgroundImage = createGlobalStyle`
   body {
-    background: url(${BondsImage}) no-repeat !important;
+    background: url(${ScrapsImage}) no-repeat !important;
     background-size: cover !important;
   }
 `;

@@ -108,7 +108,7 @@ const LPTokenHelpText: React.FC<{ bank: BankEntity }> = ({ bank }) => {
   let uniswapUrl: string;
   if (bank.depositTokenName.includes('TELO')) {
     pairName = 'TELO-NEAR pair';
-    uniswapUrl = 'https://spookyswap.finance/add/FTM/' + teloAddr;
+    uniswapUrl = 'https://spookyswap.finance/add/NEAR/' + teloAddr;
   } else {
     pairName = 'MINERAL-NEAR pair';
     uniswapUrl = 'https://spookyswap.finance/add/FTM/' + mineralAddr;

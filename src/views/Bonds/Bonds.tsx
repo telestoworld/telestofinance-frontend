@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 import Page from '../../components/Page';
-import BondsImage from '../../assets/img/bonds.png';
+import ScrapsImage from '../../assets/img/bonds.png';
 import { createGlobalStyle } from 'styled-components';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import { useWallet } from 'use-wallet';
@@ -9,53 +9,53 @@ import PageHeader from '../../components/PageHeader';
 import ExchangeCard from './components/ExchangeCard';
 import styled from 'styled-components';
 import Spacer from '../../components/Spacer';
-import useBondStats from '../../hooks/useBondStats';
+import useScrapStats from '../../hooks/useScrapStats';
 import useTeloFinance from '../../hooks/useTeloFinance';
 import useCashPriceInLastTWAP from '../../hooks/useCashPriceInLastTWAP';
 import { useTransactionAdder } from '../../state/transactions/hooks';
 import ExchangeStat from './components/ExchangeStat';
 import useTokenBalance from '../../hooks/useTokenBalance';
-import useBondsPurchasable from '../../hooks/useBondsPurchasable';
+import useScrapsPurchasable from '../../hooks/useScrapsPurchasable';
 import { getDisplayBalance } from '../../utils/formatBalance';
 import { BOND_REDEEM_PRICE, BOND_REDEEM_PRICE_BN } from '../../telo-finance/constants';
 
 const BackgroundImage = createGlobalStyle`
   body {
-    background: url(${BondsImage}) no-repeat !important;
+    background: url(${ScrapsImage}) no-repeat !important;
     background-size: cover !important;
   }
 `;
 
-const Bonds: React.FC = () => {
+const Scraps: React.FC = () => {
   const { path } = useRouteMatch();
   const { account } = useWallet();
   const teloFinance = useTeloFinance();
   const addTransaction = useTransactionAdder();
-  const bondStat = useBondStats();
+  const scrapStat = useScrapStats();
   const cashPrice = useCashPriceInLastTWAP();
-  const bondsPurchasable = useBondsPurchasable();
+  const scrapsPurchasable = useScrapsPurchasable();
 
-  const bondBalance = useTokenBalance(teloFinance?.TBOND);
+  const bondBalance = useTokenBalance(teloFinance?.SCRAP);
 
-  const handleBuyBonds = useCallback(
+  const handleBuyScraps = useCallback(
     async (amount: string) => {
-      const tx = await teloFinance.buyBonds(amount);
+      const tx = await teloFinance.buyScraps(amount);
       addTransaction(tx, {
-        summary: `Buy ${Number(amount).toFixed(2)} TBOND with ${amount} TOMB`,
+        summary: `Buy ${Number(amount).toFixed(2)} SCRAP with ${amount} TELO`,
       });
     },
     [teloFinance, addTransaction],
   );
 
-  const handleRedeemBonds = useCallback(
+  const handleRedeemScraps = useCallback(
     async (amount: string) => {
-      const tx = await teloFinance.redeemBonds(amount);
-      addTransaction(tx, { summary: `Redeem ${amount} TBOND` });
+      const tx = await teloFinance.redeemScraps(amount);
+      addTransaction(tx, { summary: `Redeem ${amount} SCRAP` });
     },
     [teloFinance, addTransaction],
   );
-  const isBondRedeemable = useMemo(() => cashPrice.gt(BOND_REDEEM_PRICE_BN), [cashPrice]);
-  const isBondPurchasable = useMemo(() => Number(bondStat?.tokenInFtm) < 1.01, [bondStat]);
+  const isScrapRedeemable = useMemo(() => cashPrice.gt(BOND_REDEEM_PRICE_BN), [cashPrice]);
+  const isScrapPurchasable = useMemo(() => Number(bondStat?.tokenInNear) < 1.01, [bondStat]);
 
   return (
     <Switch>
@@ -64,52 +64,52 @@ const Bonds: React.FC = () => {
         {!!account ? (
           <>
             <Route exact path={path}>
-              <PageHeader icon={'🏦'} title="Buy & Redeem Bonds" subtitle="Earn premiums upon redemption" />
+              <PageHeader icon={'🏦'} title="Buy & Redeem Scraps" subtitle="Earn premiums upon redemption" />
             </Route>
-            <StyledBond>
+            <StyledScrap>
               <StyledCardWrapper>
                 <ExchangeCard
                   action="Purchase"
-                  fromToken={teloFinance.TOMB}
-                  fromTokenName="TOMB"
-                  toToken={teloFinance.TBOND}
-                  toTokenName="TBOND"
+                  fromToken={teloFinance.TELO}
+                  fromTokenName="TELO"
+                  toToken={teloFinance.SCRAP}
+                  toTokenName="SCRAP"
                   priceDesc={
-                    !isBondPurchasable
-                      ? 'TOMB is over peg'
-                      : getDisplayBalance(bondsPurchasable, 18, 4) + ' TBOND available for purchase'
+                    !isScrapPurchasable
+                      ? 'TELO is over peg'
+                      : getDisplayBalance(bondsPurchasable, 18, 4) + ' SCRAP available for purchase'
                   }
-                  onExchange={handleBuyBonds}
-                  disabled={!bondStat || isBondRedeemable}
+                  onExchange={handleBuyScraps}
+                  disabled={!bondStat || isScrapRedeemable}
                 />
               </StyledCardWrapper>
               <StyledStatsWrapper>
                 <ExchangeStat
-                  tokenName="TOMB"
+                  tokenName="TELO"
                   description="Last-Hour TWAP Price"
                   price={getDisplayBalance(cashPrice, 18, 4)}
                 />
                 <Spacer size="md" />
                 <ExchangeStat
-                  tokenName="TBOND"
-                  description="Current Price: (TOMB)^2"
-                  price={Number(bondStat?.tokenInFtm).toFixed(2) || '-'}
+                  tokenName="SCRAP"
+                  description="Current Price: (TELO)^2"
+                  price={Number(bondStat?.tokenInNear).toFixed(2) || '-'}
                 />
               </StyledStatsWrapper>
               <StyledCardWrapper>
                 <ExchangeCard
                   action="Redeem"
-                  fromToken={teloFinance.TBOND}
-                  fromTokenName="TBOND"
-                  toToken={teloFinance.TOMB}
-                  toTokenName="TOMB"
-                  priceDesc={`${getDisplayBalance(bondBalance)} TBOND Available in wallet`}
-                  onExchange={handleRedeemBonds}
-                  disabled={!bondStat || bondBalance.eq(0) || !isBondRedeemable}
-                  disabledDescription={!isBondRedeemable ? `Enabled when TOMB > ${BOND_REDEEM_PRICE}FTM` : null}
+                  fromToken={teloFinance.SCRAP}
+                  fromTokenName="SCRAP"
+                  toToken={teloFinance.TELO}
+                  toTokenName="TELO"
+                  priceDesc={`${getDisplayBalance(bondBalance)} SCRAP Available in wallet`}
+                  onExchange={handleRedeemScraps}
+                  disabled={!bondStat || bondBalance.eq(0) || !isScrapRedeemable}
+                  disabledDescription={!isScrapRedeemable ? `Enabled when TELO > ${BOND_REDEEM_PRICE}NEAR` : null}
                 />
               </StyledCardWrapper>
-            </StyledBond>
+            </StyledScrap>
           </>
         ) : (
           <UnlockWallet />
@@ -119,7 +119,7 @@ const Bonds: React.FC = () => {
   );
 };
 
-const StyledBond = styled.div`
+const StyledScrap = styled.div`
   display: flex;
   @media (max-width: 768px) {
     width: 100%;
@@ -149,4 +149,4 @@ const StyledStatsWrapper = styled.div`
   }
 `;
 
-export default Bonds;
+export default Scraps;

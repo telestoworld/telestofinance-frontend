@@ -13,7 +13,7 @@ import useTeloStats from '../../hooks/useTStats';
 import useLpStats from '../../hooks/useLpStats';
 import useModal from '../../hooks/useModal';
 import useZap from '../../hooks/useZap';
-import useBondStats from '../../hooks/useBondStats';
+import useScrapStats from '../../hooks/useScrapStats';
 import useMineralStats from '../../hooks/useMineralStats';
 import useTotalValueLocked from '../../hooks/useTotalValueLocked';
 import { telo as teloTesting, mineral as mineralTesting } from '../../telo-finance/deployments/deployments.testing.json';
@@ -49,7 +49,7 @@ const Home = () => {
   const mineralNearLpStats = useLpStats('MINERAL-NEAR-LP');
   const teloStats = useTeloStats();
   const mineralStats = useMineralStats();
-  const bondStats = useBondStats();
+  const bondStats = useScrapStats();
   const teloFinance = useTeloFinance();
 
   let telo;
@@ -73,7 +73,7 @@ const Home = () => {
     () => (teloStats ? Number(teloStats.priceInDollars).toFixed(2) : null),
     [teloStats],
   );
-  const teloPriceInFTM = useMemo(() => (teloStats ? Number(teloStats.tokenInFtm).toFixed(4) : null), [teloStats]);
+  const teloPriceInNEAR = useMemo(() => (teloStats ? Number(teloStats.tokenInNear).toFixed(4) : null), [teloStats]);
   const teloCirculatingSupply = useMemo(() => (teloStats ? String(teloStats.circulatingSupply) : null), [teloStats]);
   const teloTotalSupply = useMemo(() => (teloStats ? String(teloStats.totalSupply) : null), [teloStats]);
 
@@ -230,7 +230,7 @@ const Home = () => {
               </Box>
               Current Price
               <Box>
-                <span style={{ fontSize: '30px' }}>{teloPriceInFTM ? teloPriceInFTM : '-.----'} TELO</span>
+                <span style={{ fontSize: '30px' }}>{teloPriceInNEAR ? teloPriceInNEAR : '-.----'} TELO</span>
               </Box>
               <Box>
                 <span style={{ fontSize: '16px', alignContent: 'flex-start' }}>
@@ -269,7 +269,7 @@ const Home = () => {
               </Box>
               Current Price
               <Box>
-                <span style={{ fontSize: '30px' }}>{mineralPriceInFTM ? mineralPriceInFTM : '-.----'} FTM</span>
+                <span style={{ fontSize: '30px' }}>{mineralPriceInNEAR ? mineralPriceInNEAR : '-.----'} NEAR</span>
               </Box>
               <Box>
                 <span style={{ fontSize: '16px' }}>${mineralPriceInDollars ? mineralPriceInDollars : '-.--'}</span>
@@ -306,7 +306,7 @@ const Home = () => {
               </Box>
               Current Price
               <Box>
-                <span style={{ fontSize: '30px' }}>{bondPriceInFTM ? bondPriceInFTM : '-.----'} NEAR</span>
+                <span style={{ fontSize: '30px' }}>{bondPriceInNEAR ? bondPriceInNEAR : '-.----'} NEAR</span>
               </Box>
               <Box>
                 <span style={{ fontSize: '16px' }}>${bondPriceInDollars ? bondPriceInDollars : '-.--'}</span>

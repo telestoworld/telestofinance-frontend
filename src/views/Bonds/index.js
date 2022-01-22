@@ -1,1 +1,1 @@
-export { default } from './Bonds';
+export { default } from './Scraps';

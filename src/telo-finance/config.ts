@@ -11,7 +11,7 @@ export type Configuration = {
   config?: EthereumConfig;
 
   baseLaunchDate: Date;
-  bondLaunchesAt: Date;
+  scrapLaunchesAt: Date;
   masonryLaunchesAt: Date;
 
   refreshInterval: number;

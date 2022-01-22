@@ -33,7 +33,7 @@ const ZapModal: React.FC<ZapProps> = ({ onConfirm, onDismiss, tokenName = '', de
   const [val, setVal] = useState('');
   const [zappingToken, setZappingToken] = useState(NEAR_TICKER);
   const [zappingTokenBalance, setZappingTokenBalance] = useState(nearBalance);
-  const [estimate, setEstimate] = useState({ token0: '0', token1: '0' }); // token0 will always be FTM in this case
+  const [estimate, setEstimate] = useState({ token0: '0', token1: '0' }); // token0 will always be NEAR in this case
   const [approveZapperStatus, approveZapper] = useApproveZapper(zappingToken);
   const teloNearLpStats = useLpStats('NEAR-LP');
   const minerealNearLpStats = useLpStats('MINERAL-NEAR-LP');
@@ -101,7 +101,7 @@ const ZapModal: React.FC<ZapProps> = ({ onConfirm, onDismiss, tokenName = '', de
         <StyledMenuItem value={NEAR_TICKER}>NEAR</StyledMenuItem>
         <StyledMenuItem value={MINERAL_TICKER}>MINERAL</StyledMenuItem>
         {/* Telo as an input for zapping will be disabled due to issues occuring with the Gatekeeper system */}
-        {/* <StyledMenuItem value={TOMB_TICKER}>TOMB</StyledMenuItem> */}
+        {/* <StyledMenuItem value={TELO_TICKER}>TELO</StyledMenuItem> */}
       </Select>
       <TokenInput
         onSelectMax={handleSelectMax}

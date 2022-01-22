@@ -12,7 +12,7 @@ import useTokenBalance from '../../hooks/useTokenBalance';
 import { getDisplayBalance } from '../../utils/formatBalance';
 import useApproveTaxOffice from '../../hooks/useApproveTaxOffice';
 import { ApprovalState } from '../../hooks/useApprove';
-import useProvideTeloFtmLP from '../../hooks/useProvideTeloNearLP';
+import useProvideTeloNearLP from '../../hooks/useProvideTeloNearLP';
 import { Alert } from '@material-ui/lab';
 
 const BackgroundImage = createGlobalStyle`
@@ -27,20 +27,20 @@ function isNumeric(n) {
 
 const ProvideLiquidity = () => {
   const [teloAmount, setTeloAmount] = useState(0);
-  const [nearAmount, setFtmAmount] = useState(0);
+  const [nearAmount, setNearAmount] = useState(0);
   const [lpTokensAmount, setLpTokensAmount] = useState(0);
   const { balance } = useWallet();
   const teloStats = useTeloStats();
   const teloFinance = useTeloFinance();
   const [approveTaxOfficeStatus, approveTaxOffice] = useApproveTaxOffice();
-  const teloBalance = useTokenBalance(teloFinance.TOMB);
+  const teloBalance = useTokenBalance(teloFinance.TELO);
   const nearBalance = (balance / 1e18).toFixed(4);
-  const { onProvideTeloFtmLP } = useProvideTeloFtmLP();
-  const teloFtmLpStats = useLpStats('TOMB-FTM-LP');
+  const { onProvideTeloNearLP } = useProvideTeloNearLP();
+  const teloNearLpStats = useLpStats('TELO-NEAR-LP');
 
-  const teloLPStats = useMemo(() => (teloFtmLpStats ? teloFtmLpStats : null), [teloFtmLpStats]);
-  const teloPriceInFTM = useMemo(() => (teloStats ? Number(teloStats.tokenInFtm).toFixed(2) : null), [teloStats]);
-  const nearPriceInTOMB = useMemo(() => (teloStats ? Number(1 / teloStats.tokenInFtm).toFixed(2) : null), [teloStats]);
+  const teloLPStats = useMemo(() => (teloNearLpStats ? teloNearLpStats : null), [teloNearLpStats]);
+  const teloPriceInNEAR = useMemo(() => (teloStats ? Number(teloStats.tokenInNear).toFixed(2) : null), [teloStats]);
+  const nearPriceInTELO = useMemo(() => (teloStats ? Number(1 / teloStats.tokenInNear).toFixed(2) : null), [teloStats]);
   // const classes = useStyles();
 
   const handleTeloChange = async (e) => {
@@ -49,31 +49,31 @@ const ProvideLiquidity = () => {
     }
     if (!isNumeric(e.currentTarget.value)) return;
     setTeloAmount(e.currentTarget.value);
-    const quoteFromSpooky = await teloFinance.quoteFromSpooky(e.currentTarget.value, 'TOMB');
-    setFtmAmount(quoteFromSpooky);
+    const quoteFromSpooky = await teloFinance.quoteFromSpooky(e.currentTarget.value, 'TELO');
+    setNearAmount(quoteFromSpooky);
     setLpTokensAmount(quoteFromSpooky / teloLPStats.nearAmount);
   };
 
-  const handleFtmChange = async (e) => {
+  const handleNearChange = async (e) => {
     if (e.currentTarget.value === '' || e.currentTarget.value === 0) {
-      setFtmAmount(e.currentTarget.value);
+      setNearAmount(e.currentTarget.value);
     }
     if (!isNumeric(e.currentTarget.value)) return;
-    setFtmAmount(e.currentTarget.value);
-    const quoteFromSpooky = await teloFinance.quoteFromSpooky(e.currentTarget.value, 'FTM');
+    setNearAmount(e.currentTarget.value);
+    const quoteFromSpooky = await teloFinance.quoteFromSpooky(e.currentTarget.value, 'NEAR');
     setTeloAmount(quoteFromSpooky);
 
     setLpTokensAmount(quoteFromSpooky / teloLPStats.tokenAmount);
   };
   const handleTeloSelectMax = async () => {
-    const quoteFromSpooky = await teloFinance.quoteFromSpooky(getDisplayBalance(teloBalance), 'TOMB');
+    const quoteFromSpooky = await teloFinance.quoteFromSpooky(getDisplayBalance(teloBalance), 'TELO');
     setTeloAmount(getDisplayBalance(teloBalance));
-    setFtmAmount(quoteFromSpooky);
+    setNearAmount(quoteFromSpooky);
     setLpTokensAmount(quoteFromSpooky / teloLPStats.nearAmount);
   };
-  const handleFtmSelectMax = async () => {
-    const quoteFromSpooky = await teloFinance.quoteFromSpooky(nearBalance, 'FTM');
-    setFtmAmount(nearBalance);
+  const handleNearSelectMax = async () => {
+    const quoteFromSpooky = await teloFinance.quoteFromSpooky(nearBalance, 'NEAR');
+    setNearAmount(nearBalance);
     setTeloAmount(quoteFromSpooky);
     setLpTokensAmount(nearBalance / teloLPStats.nearAmount);
   };
@@ -87,7 +87,7 @@ const ProvideLiquidity = () => {
       <Grid container justify="center">
         <Box style={{ width: '600px' }}>
           <Alert variant="filled" severity="warning" style={{ marginBottom: '10px' }}>
-            <b>This and <a href="https://spookyswap.finance/"  rel="noopener noreferrer" target="_blank">Spookyswap</a> are the only ways to provide Liquidity on TOMB-FTM pair without paying tax.</b>
+            <b>This and <a href="https://spookyswap.finance/"  rel="noopener noreferrer" target="_blank">Spookyswap</a> are the only ways to provide Liquidity on TELO-FTM pair without paying tax.</b>
           </Alert>
           <Grid item xs={12} sm={12}>
             <Paper>
@@ -101,16 +101,16 @@ const ProvideLiquidity = () => {
                           onChange={handleTeloChange}
                           value={teloAmount}
                           max={getDisplayBalance(teloBalance)}
-                          symbol={'TOMB'}
+                          symbol={'TELO'}
                         ></TokenInput>
                       </Grid>
                       <Grid item xs={12}>
                         <TokenInput
-                          onSelectMax={handleFtmSelectMax}
-                          onChange={handleFtmChange}
+                          onSelectMax={handleNearSelectMax}
+                          onChange={handleNearChange}
                           value={nearAmount}
                           max={nearBalance}
-                          symbol={'FTM'}
+                          symbol={'NEAR'}
                         ></TokenInput>
                       </Grid>
                       <Grid item xs={12}>
@@ -122,7 +122,7 @@ const ProvideLiquidity = () => {
                         {approveTaxOfficeStatus === ApprovalState.APPROVED ? (
                           <Button
                             variant="contained"
-                            onClick={() => onProvideTeloFtmLP(nearAmount.toString(), teloAmount.toString())}
+                            onClick={() => onProvideTeloNearLP(nearAmount.toString(), teloAmount.toString())}
                             color="primary"
                             style={{ margin: '0 10px', color: '#fff' }}
                           >

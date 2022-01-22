@@ -84,12 +84,12 @@ const Regulations = () => {
           <TableHead>
             <TableRow>
               <StyledTableCell align="center">Epoch</StyledTableCell>
-              <StyledTableCell align="center">Masonry funding</StyledTableCell>
+              <StyledTableCell align="center">Trident Lounge funding</StyledTableCell>
               <StyledTableCell align="center">DAO funding</StyledTableCell>
               <StyledTableCell align="center">DEV funding</StyledTableCell>
               <StyledTableCell align="center">Total</StyledTableCell>
-              <StyledTableCell align="center">Bonds Bought</StyledTableCell>
-              <StyledTableCell align="center">Bonds Redeemed</StyledTableCell>
+              <StyledTableCell align="center">Scraps Bought</StyledTableCell>
+              <StyledTableCell align="center">Scraps Redeemed</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
