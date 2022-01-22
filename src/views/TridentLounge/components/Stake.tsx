@@ -25,7 +25,7 @@ import useTeloFinance from '../../../hooks/useTeloFinance';
 import ProgressCountdown from './ProgressCountdown';
 import useStakedBalanceOnLounge from '../../../hooks/useStakedBalanceOnLounge';
 import useStakedTokenPriceInDollars from '../../../hooks/useStakedTokenPriceInDollars';
-import useUnstakeTimerLounge from '../../../hooks/masonry/useUnstakeTimerLounge';
+import useUnstakeTimerLounge from '../../../hooks/lounge/useUnstakeTimerLounge';
 import TokenSymbol from '../../../components/TokenSymbol';
 import useStakeToLounge from '../../../hooks/useStakeToLounge';
 import useWithdrawFromLounge from '../../../hooks/useWithdrawFromLounge';

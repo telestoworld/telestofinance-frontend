@@ -11,7 +11,7 @@ const useScrapPurchasable = () => {
   useEffect(() => {
     async function fetchScrapPurchasable() {
         try {
-            setBalance(await teloFinance.getScrapPurchasable());
+            setBalance(await teloFinance.getScrapsPurchasable());
         }
         catch(err) {
             console.error(err);

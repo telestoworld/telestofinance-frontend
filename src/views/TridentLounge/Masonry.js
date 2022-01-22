@@ -106,7 +106,7 @@ const Lounge = () => {
               <Grid item xs={12} md={2} lg={2}>
                 <Card className={classes.gridItem}>
                   <CardContent align="center">
-                    <Typography>TSHARES Staked</Typography>
+                    <Typography>Mineral Staked</Typography>
                     <Typography>{getDisplayBalance(totalStaked)}</Typography>
                   </CardContent>
                 </Card>
@@ -116,7 +116,7 @@ const Lounge = () => {
             <Grid container justify="center">
               <Box mt={3} style={{ width: '600px' }}>
                 <Alert variant="filled" severity="warning">
-                  Staked TSHAREs can only be withdrawn after 6 epochs since deposit.
+                  Staked Mineral can only be withdrawn after 6 epochs since deposit.
                 </Alert>
               </Box>
             </Grid>

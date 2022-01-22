@@ -10,7 +10,7 @@ const useStakedTokenPriceInDollars = (stakedTokenName: string, stakedToken: ERC2
   const isUnlocked = teloFinance?.isUnlocked;
 
   const fetchBalance = useCallback(async () => {
-    const balance = await TeloFinanceProviderFinance.getDepositTokenPriceInDollars(stakedTokenName, stakedToken);
+    const balance = await teloFinanceProvider.getDepositTokenPriceInDollars(stakedTokenName, stakedToken);
     setStakedTokenPriceInDollars(balance);
   }, [stakedToken, stakedTokenName, teloFinance]);
 

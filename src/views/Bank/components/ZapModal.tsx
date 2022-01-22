@@ -36,7 +36,7 @@ const ZapModal: React.FC<ZapProps> = ({ onConfirm, onDismiss, tokenName = '', de
   const [estimate, setEstimate] = useState({ token0: '0', token1: '0' }); // token0 will always be NEAR in this case
   const [approveZapperStatus, approveZapper] = useApproveZapper(zappingToken);
   const teloNearLpStats = useLpStats('NEAR-LP');
-  const minerealNearLpStats = useLpStats('MINERAL-NEAR-LP');
+  const mineralNearLpStats = useLpStats('MINERAL-NEAR-LP');
   const teloLPStats = useMemo(() => (teloNearLpStats ? teloNearLpStats : null), [teloNearLpStats]);
   const mineralLPStats = useMemo(() => (mineralNearLpStats ? mineralNearLpStats : null), [mineralNearLpStats]);
   const nearAmountPerLP = tokenName.startsWith(TELO_TICKER) ? teloLPStats?.nearAmount : mineralLPStats?.nearAmount;

@@ -50,6 +50,6 @@ export type MineralSwapperStat = {
   mineralBalance: string;
   scrapBalance: string;
   // teloPrice: string;
-  // tsharePrice: string;
+  // mineralPrice: string;
   rateMineralPerTelo: string;
 };

@@ -11,7 +11,7 @@ const useShareStats = () => {
   useEffect(() => {
     async function fetchSharePrice() {
       try {
-        setStat(await teloFinance.getShareStat());
+        setStat(await teloFinance.getMineralStat());
       } catch(err){
         console.error(err)
       }

@@ -47,7 +47,7 @@ export class TeloFinance {
       this.externalTokens[symbol] = new ERC20(address, provider, symbol, decimal);
     }
     this.TELO = new ERC20(deployments.telo.address, provider, 'TELO');
-    this.MINERAL = new ERC20(deployments.tShare.address, provider, 'MINERAL');
+    this.MINERAL = new ERC20(deployments.mineral.address, provider, 'MINERAL');
     this.SCRAP = new ERC20(deployments.tScrap.address, provider, 'SCRAP');
     this.NEAR = this.externalTokens['WNEAR'];
 
@@ -170,19 +170,19 @@ export class TeloFinance {
   }
 
   /**
-   * @returns TokenStat for TSHARE
+   * @returns TokenStat for MINERAL
    * priceInNEAR
    * priceInDollars
    * TotalSupply
    * CirculatingSupply (always equal to total supply for scraps)
    */
-  async getShareStat(): Promise<TokenStat> {
-    const { TeloNearLPTShareRewardPool } = this.contracts;
+  async getMineralStat(): Promise<TokenStat> {
+    const { TeloNearLPMineralRewardPool } = this.contracts;
 
     const supply = await this.MINERAL.totalSupply();
 
     const priceInNEAR = await this.getTokenPriceFromPancakeswap(this.MINERAL);
-    const teloRewardPoolSupply = await this.MINERAL.balanceOf(TeloNearLPTShareRewardPool.address);
+    const teloRewardPoolSupply = await this.MINERAL.balanceOf(TeloNearLPMineralRewardPool.address);
     const mineralCirculatingSupply = supply.sub(teloRewardPoolSupply);
     const priceOfOneNEAR = await this.getWNEARPriceFromPancakeswap();
     const priceOfSharesInDollars = (Number(priceInNEAR) * Number(priceOfOneNEAR)).toFixed(2);
@@ -232,7 +232,7 @@ export class TeloFinance {
     const depositTokenPrice = await this.getDepositTokenPriceInDollars(bank.depositTokenName, depositToken);
     const stakeInPool = await depositToken.balanceOf(bank.address);
     const TVL = Number(depositTokenPrice) * Number(getDisplayBalance(stakeInPool, depositToken.decimal));
-    const stat = bank.earnTokenName === 'TELO' ? await this.getTeloStat() : await this.getShareStat();
+    const stat = bank.earnTokenName === 'TELO' ? await this.getTeloStat() : await this.getMineralStat();
     const tokenPerSecond = await this.getTokenPerSecond(
       bank.earnTokenName,
       bank.contract,
@@ -290,7 +290,7 @@ export class TeloFinance {
       }
       return await poolContract.epochTeloPerSecond(0);
     }
-    const rewardPerSecond = await poolContract.tSharePerSecond();
+    const rewardPerSecond = await poolContract.mineralPerSecond();
     if (depositTokenName.startsWith('TELO')) {
       return rewardPerSecond.mul(35500).div(59500);
     } else {
@@ -314,7 +314,7 @@ export class TeloFinance {
     } else {
       if (tokenName === 'TELO-NEAR-LP') {
         tokenPrice = await this.getLPTokenPrice(token, this.TELO, true);
-      } else if (tokenName === 'TSHARE-NEAR-LP') {
+      } else if (tokenName === 'MINERAL-NEAR-LP') {
         tokenPrice = await this.getLPTokenPrice(token, this.MINERAL, false);
       } else if (tokenName === 'SHIBA') {
         tokenPrice = await this.getTokenPriceFromSpiritswap(token);
@@ -373,7 +373,7 @@ export class TeloFinance {
       totalValue += poolValue;
     }
 
-    const MINERALPrice = (await this.getShareStat()).priceInDollars;
+    const MINERALPrice = (await this.getMineralStat()).priceInDollars;
     const loungeGetMineralBalanceOf = await this.MINERAL.balanceOf(this.currentLounge().address);
     const loungeTVL = Number(getDisplayBalance(loungeGetMineralBalanceOf, this.MINERAL.decimal)) * Number(MINERALPrice);
 
@@ -385,14 +385,14 @@ export class TeloFinance {
    * Reference https://github.com/DefiDebauchery/discordpricebot/blob/4da3cdb57016df108ad2d0bb0c91cd8dd5f9d834/pricebot/pricebot.py#L150
    * @param lpToken the token under calculation
    * @param token the token pair used as reference (the other one would be NEAR in most cases)
-   * @param isTelo sanity check for usage of telo token or tShare
+   * @param isTelo sanity check for usage of telo token or MINERAL
    * @returns price of the LP token
    */
   async getLPTokenPrice(lpToken: ERC20, token: ERC20, isTelo: boolean): Promise<string> {
     const totalSupply = getFullDisplayBalance(await lpToken.totalSupply(), lpToken.decimal);
     //Get amount of tokenA
     const tokenSupply = getFullDisplayBalance(await token.balanceOf(lpToken.address), token.decimal);
-    const stat = isTelo === true ? await this.getTeloStat() : await this.getShareStat();
+    const stat = isTelo === true ? await this.getTeloStat() : await this.getMineralStat();
     const priceOfToken = stat.priceInDollars;
     const tokenInLP = Number(tokenSupply) / Number(totalSupply);
     const tokenPrice = (Number(priceOfToken) * tokenInLP * 2) //We multiply by 2 since half the price of the lp token is the price of each piece of the pair. So twice gives the total
@@ -556,7 +556,7 @@ export class TeloFinance {
 
     const lastRewardsReceived = lastHistory[1];
 
-    const MINERALPrice = (await this.getShareStat()).priceInDollars;
+    const MINERALPrice = (await this.getMineralStat()).priceInDollars;
     const TELOPrice = (await this.getTeloStat()).priceInDollars;
     const epochRewardsPerShare = lastRewardsReceived / 1e18;
 
@@ -612,7 +612,7 @@ export class TeloFinance {
   async getStakedSharesOnLounge(): Promise<BigNumber> {
     const Lounge = this.currentLounge();
     if (this.masonryVersionOfUser === 'v1') {
-      return await Lounge.getShareOf(this.myAccount);
+      return await Lounge.getMineralOf(this.myAccount);
     }
     return await Lounge.balanceOf(this.myAccount);
   }
@@ -725,7 +725,7 @@ export class TeloFinance {
       if (assetName === 'TELO') {
         asset = this.TELO;
         assetUrl = 'https://tomb.finance/presskit/tomb_icon_noBG.png';
-      } else if (assetName === 'TSHARE') {
+      } else if (assetName === 'MINERAL') {
         asset = this.MINERAL;
         assetUrl = 'https://tomb.finance/presskit/tshare_icon_noBG.png';
       } else if (assetName === 'SCRAP') {
@@ -878,16 +878,16 @@ export class TeloFinance {
     }
   }
   async swapScrapToMineral(scrapAmount: BigNumber): Promise<TransactionResponse> {
-    const { TShareSwapper } = this.contracts;
-    return await MineralSwapper.swapScrapToTShare(scrapAmount);
+    const { MineralSwapper } = this.contracts;
+    return await MineralSwapper.swapScrapToMineral(scrapAmount);
   }
   async estimateAmountOfMineral(scrapAmount: string): Promise<string> {
-    const { TShareSwapper } = this.contracts;
+    const { MineralSwapper } = this.contracts;
     try {
-      const estimateBN = await TShareSwapper.estimateAmountOfTShare(parseUnits(scrapAmount, 18));
+      const estimateBN = await MineralSwapper.estimateAmountOfMineral(parseUnits(scrapAmount, 18));
       return getDisplayBalance(estimateBN, 18, 6);
     } catch (err) {
-      console.error(`Failed to fetch estimate tshare amount: ${err}`);
+      console.error(`Failed to fetch estimate mineral amount: ${err}`);
     }
   }
 
@@ -895,16 +895,16 @@ export class TeloFinance {
     const { MineralSwapper } = this.contracts;
     const mineralBalanceBN = await MineralSwapper.getMineralBalance();
     const scrapBalanceBN = await MineralSwapper.getMineralBalance(address);
-    // const teloPriceBN = await TShareSwapper.getTeloPrice();
-    // const mineralPriceBN = await TShareSwapper.getTSharePrice();
-    const rateMineralPerTeloBN = await MineralSwapper.getTShareAmountPerTelo();
+    // const teloPriceBN = await MineralSwapper.getTeloPrice();
+    // const mineralPriceBN = await MineralSwapper.getMineralPrice();
+    const rateMineralPerTeloBN = await MineralSwapper.getMineralAmountPerTelo();
     const mineralBalance = getDisplayBalance(mineralBalanceBN, 18, 5);
     const scrapBalance = getDisplayBalance(scrapBalanceBN, 18, 5);
     return {
       mineralBalance: mineralBalance.toString(),
       scrapBalance: scrapBalance.toString(),
       // teloPrice: teloPriceBN.toString(),
-      // tsharePrice: tsharePriceBN.toString(),
+      // mineralPrice: mineralPriceBN.toString(),
       rateMineralPerTelo: rateMineralPerTeloBN.toString(),
     };
   }
