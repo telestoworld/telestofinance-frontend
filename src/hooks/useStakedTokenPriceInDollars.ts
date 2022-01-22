@@ -3,6 +3,8 @@ import { useCallback, useEffect, useState } from 'react';
 import useTeloFinance from './useTeloFinance';
 import config from '../config';
 import ERC20 from '../telo-finance/ERC20';
+import { TeloFinanceProvider } from '../contexts/TeloFinanceProvider/TeloFinanceProvider';
+
 
 const useStakedTokenPriceInDollars = (stakedTokenName: string, stakedToken: ERC20) => {
   const [stakedTokenPriceInDollars, setStakedTokenPriceInDollars] = useState('0');
@@ -10,7 +12,7 @@ const useStakedTokenPriceInDollars = (stakedTokenName: string, stakedToken: ERC2
   const isUnlocked = teloFinance?.isUnlocked;
 
   const fetchBalance = useCallback(async () => {
-    const balance = await teloFinanceProvider.getDepositTokenPriceInDollars(stakedTokenName, stakedToken);
+    const balance = await TeloFinanceProvider.getDepositTokenPriceInDollars(stakedTokenName, stakedToken);
     setStakedTokenPriceInDollars(balance);
   }, [stakedToken, stakedTokenName, teloFinance]);
 
