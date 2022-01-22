@@ -625,7 +625,7 @@ export class TeloFinance {
     return await Lounge.earned(this.myAccount);
   }
 
-  async withdrawShareFromLounge(amount: string): Promise<TransactionResponse> {
+  async withdrawMineralFromLounge(amount: string): Promise<TransactionResponse> {
     const Lounge = this.currentLounge();
     return await Lounge.withdraw(decimalToBalance(amount));
   }
