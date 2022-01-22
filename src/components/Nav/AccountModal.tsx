@@ -6,19 +6,19 @@ import { getDisplayBalance } from '../../utils/formatBalance';
 import Label from '../Label';
 import Modal, { ModalProps } from '../Modal';
 import ModalTitle from '../ModalTitle';
-import useTombFinance from '../../hooks/useTombFinance';
+import useTeloFinance from '../../hooks/useTeloFinance';
 import TokenSymbol from '../TokenSymbol';
 
 const AccountModal: React.FC<ModalProps> = ({ onDismiss }) => {
-  const teloFinance = useTombFinance();
+  const teloFinance = useTeloFinance();
 
-  const teloBalance = useTokenBalance(tombFinance.TELO);
+  const teloBalance = useTokenBalance(teloFinance.TELO);
   const displayTeloBalance = useMemo(() => getDisplayBalance(teloBalance), [teloBalance]);
 
   const mineralBalance = useTokenBalance(teloFinance.MINERAL);
   const displayMineralBalance = useMemo(() => getDisplayBalance(mineralBalance), [mineralBalance]);
 
-  const scrapBalance = useTokenBalance(tombFinance.SCRAP);
+  const scrapBalance = useTokenBalance(teloFinance.SCRAP);
   const displayScrapBalance = useMemo(() => getDisplayBalance(scrapBalance), [scrapBalance]);
 
   return (

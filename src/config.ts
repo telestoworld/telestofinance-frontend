@@ -1,7 +1,7 @@
 // import { ChainId } from '@pancakeswap-libs/sdk';
 import { ChainId } from '@spookyswap/sdk';
-import { Configuration } from './tomb-finance/config';
-import { BankInfo } from './tomb-finance';
+import { Configuration } from './telo-finance/config';
+import { BankInfo } from './telo-finance';
 
 const configurations: { [env: string]: Configuration } = {
   development: {
@@ -21,8 +21,8 @@ const configurations: { [env: string]: Configuration } = {
       'TSHARE-FTM-LP': ['0x20bc90bB41228cb9ab412036F80CE4Ef0cAf1BD5', 18],
     },
     baseLaunchDate: new Date('2021-06-02 13:00:00Z'),
-    bondLaunchesAt: new Date('2020-12-03T15:00:00Z'),
-    masonryLaunchesAt: new Date('2020-12-11T00:00:00Z'),
+    scrapLaunchesAt: new Date('2020-12-03T15:00:00Z'),
+    loungeLaunchesAt: new Date('2020-12-11T00:00:00Z'),
     refreshInterval: 10000,
   },
   production: {
@@ -42,7 +42,7 @@ const configurations: { [env: string]: Configuration } = {
       'TSHARE-FTM-LP': ['0x4733bc45eF91cF7CcEcaeeDb794727075fB209F2', 18],
     },
     baseLaunchDate: new Date('2021-06-02 13:00:00Z'),
-    bondLaunchesAt: new Date('2020-12-03T15:00:00Z'),
+    scrapLaunchesAt: new Date('2020-12-03T15:00:00Z'),
     masonryLaunchesAt: new Date('2020-12-11T00:00:00Z'),
     refreshInterval: 10000,
   },

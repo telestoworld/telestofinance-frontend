@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import useTombFinance from './useTombFinance';
+import useTeloFinance from './useTeloFinance';
 import config from '../config';
 import { BigNumber } from 'ethers';
 
@@ -8,11 +8,11 @@ const useCashPriceInLastTWAP = () => {
   const tombFinance = useTombFinance();
 
   const fetchCashPrice = useCallback(async () => {
-    setPrice(await tombFinance.getTombPriceInLastTWAP());
+    setPrice(await teloFinance.getTeloPriceInLastTWAP());
   }, [tombFinance]);
 
   useEffect(() => {
-    fetchCashPrice().catch((err) => console.error(`Failed to fetch TOMB price: ${err.stack}`));
+    fetchCashPrice().catch((err) => console.error(`Failed to fetch TELO price: ${err.stack}`));
     const refreshInterval = setInterval(fetchCashPrice, config.refreshInterval);
     return () => clearInterval(refreshInterval);
   }, [setPrice, tombFinance, fetchCashPrice]);

@@ -1,23 +1,23 @@
 import { useCallback, useEffect, useState } from 'react';
-import useTombFinance from './useTombFinance';
-import useStakedBalanceOnMasonry from './useStakedBalanceOnMasonry';
+import useTeloFinance from './useTeloFinance';
+import useStakedBalanceOnLounge from './useStakedBalanceOnLounge';
 
 const useMasonryVersion = () => {
-  const [masonryVersion, setMasonryVersion] = useState('latest');
-  const tombFinance = useTombFinance();
-  const stakedBalance = useStakedBalanceOnMasonry();
+  const [loungeVersion, setLoungeVersion] = useState('latest');
+  const teloFinance = useTeloFinance();
+  const stakedBalance = useStakedBalanceOnLounge();
 
   const updateState = useCallback(async () => {
-    setMasonryVersion(await tombFinance.fetchMasonryVersionOfUser());
-  }, [tombFinance?.isUnlocked, stakedBalance]);
+    setLoungeVersion(await teloFinance.fetchLoungeVersionOfUser());
+  }, [teloFinance?.isUnlocked, stakedBalance]);
 
   useEffect(() => {
-    if (tombFinance?.isUnlocked) {
+    if (teloFinance?.isUnlocked) {
       updateState().catch((err) => console.error(err.stack));
     }
-  }, [tombFinance?.isUnlocked, stakedBalance]);
+  }, [teloFinance?.isUnlocked, stakedBalance]);
 
-  return masonryVersion;
+  return loungeVersion;
 };
 
 export default useMasonryVersion;

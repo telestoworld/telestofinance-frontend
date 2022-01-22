@@ -9,12 +9,12 @@ import PageHeader from '../../components/PageHeader';
 import { Box,/* Paper, Typography,*/ Button, Grid } from '@material-ui/core';
 import styled from 'styled-components';
 import Spacer from '../../components/Spacer';
-import useTombFinance from '../../hooks/useTombFinance';
+import useTeloFinance from '../../hooks/useTeloFinance';
 import { getDisplayBalance/*, getBalance*/ } from '../../utils/formatBalance';
 import { BigNumber/*, ethers*/ } from 'ethers';
-import useSwapTBondToTShare from '../../hooks/TShareSwapper/useSwapTBondToTShare';
+import useSwapScrapToMineral from '../../hooks/MineralSwapper/useSwapScrapToMineral';
 import useApprove, { ApprovalState } from '../../hooks/useApprove';
-import useTShareSwapperStats from '../../hooks/TShareSwapper/useTShareSwapperStats';
+import useMineralSwapperStats from '../../hooks/MineralSwapper/useMineralSwapperStats';
 import TokenInput from '../../components/TokenInput';
 import Card from '../../components/Card';
 import CardContent from '../../components/CardContent';
@@ -34,54 +34,54 @@ function isNumeric(n: any) {
 const Sbs: React.FC = () => {
   const { path } = useRouteMatch();
   const { account } = useWallet();
-  const tombFinance = useTombFinance();
-  const [tbondAmount, setTbondAmount] = useState('');
-  const [tshareAmount, setTshareAmount] = useState('');
+  const teloFinance = useTeloFinance();
+  const [scrapAmount, setScrapAmount] = useState('');
+  const [mineralAmount, setMineralAmount] = useState('');
 
-  const [approveStatus, approve] = useApprove(tombFinance.TBOND, tombFinance.contracts.TShareSwapper.address);
-  const { onSwapTShare } = useSwapTBondToTShare();
-  const tshareSwapperStat = useTShareSwapperStats(account);
+  const [approveStatus, approve] = useApprove(teloFinance.SCRAP, teloFinance.contracts.MineralSwapper.address);
+  const { onSwapMineral } = useSwapScrapToMineral();
+  const mineralSwapperStat = useMineralSwapperStats(account);
 
-  const tshareBalance = useMemo(() => (tshareSwapperStat ? Number(tshareSwapperStat.tshareBalance) : 0), [tshareSwapperStat]);
-  const bondBalance = useMemo(() => (tshareSwapperStat ? Number(tshareSwapperStat.tbondBalance) : 0), [tshareSwapperStat]);
+  const mineralBalance = useMemo(() => (mineralSwapperStat ? Number(mineralSwapperStat.mineralBalance) : 0), [mineralSwapperStat]);
+  const scrapBalance = useMemo(() => (mineralSwapperStat ? Number(mineralSwapperStat.scrapBalance) : 0), [mineralSwapperStat]);
 
-  const handleTBondChange = async (e: any) => {
+  const handleScrapChange = async (e: any) => {
     if (e.currentTarget.value === '') {
-      setTbondAmount('');
-      setTshareAmount('');
+      setScrapAmount('');
+      setMineralAmount('');
       return
     }
     if (!isNumeric(e.currentTarget.value)) return;
-    setTbondAmount(e.currentTarget.value);
-    const updateTShareAmount = await tombFinance.estimateAmountOfTShare(e.currentTarget.value);
-    setTshareAmount(updateTShareAmount);  
+    setScrapAmount(e.currentTarget.value);
+    const updateMineralAmount = await teloFinance.estimateAmountOfMineral(e.currentTarget.value);
+    setMineralAmount(updateMineralAmount);  
   };
 
-  const handleTBondSelectMax = async () => {
-    setTbondAmount(String(bondBalance));
-    const updateTShareAmount = await tombFinance.estimateAmountOfTShare(String(bondBalance));
-    setTshareAmount(updateTShareAmount); 
+  const handleScrapSelectMax = async () => {
+    setScrapAmount(String(scrapBalance));
+    const updateMineralAmount = await teloFinance.estimateAmountOfMineral(String(scrapBalance));
+    setMineralAmount(updateMineralAmount); 
   };
 
-  const handleTShareSelectMax = async () => {
-    setTshareAmount(String(tshareBalance));
-    const rateTSharePerTomb = (await tombFinance.getTShareSwapperStat(account)).rateTSharePerTomb;
-    const updateTBondAmount = ((BigNumber.from(10).pow(30)).div(BigNumber.from(rateTSharePerTomb))).mul(Number(tshareBalance) * 1e6);
-    setTbondAmount(getDisplayBalance(updateTBondAmount, 18, 6));
+  const handleMineralSelectMax = async () => {
+    setMineralAmount(String(mineralBalance));
+    const rateMineralPerTelo = (await teloFinance.getMineralSwapperStat(account)).rateMineralPerTelo;
+    const updateScrapAmount = ((BigNumber.from(10).pow(30)).div(BigNumber.from(rateMineralPerTelo))).mul(Number(mineralBalance) * 1e6);
+    setScrapAmount(getDisplayBalance(updateScrapAmount, 18, 6));
   };
 
-  const handleTShareChange = async (e: any) => {
+  const handleMineralChange = async (e: any) => {
     const inputData = e.currentTarget.value;
     if (inputData === '') {
-      setTshareAmount('');
-      setTbondAmount('');
+      setMineralAmount('');
+      setScrapAmount('');
       return
     }
     if (!isNumeric(inputData)) return;
-    setTshareAmount(inputData);
-    const rateTSharePerTomb = (await tombFinance.getTShareSwapperStat(account)).rateTSharePerTomb;
-    const updateTBondAmount = ((BigNumber.from(10).pow(30)).div(BigNumber.from(rateTSharePerTomb))).mul(Number(inputData) * 1e6);
-    setTbondAmount(getDisplayBalance(updateTBondAmount, 18, 6));
+    setMineralAmount(inputData);
+    const rateMineralPerTelo = (await teloFinance.getMineralSwapperStat(account)).rateMineralPerTelo;
+    const updateScrapAmount = ((BigNumber.from(10).pow(30)).div(BigNumber.from(rateMineralPerTelo))).mul(Number(inputData) * 1e6);
+    setScrapAmount(getDisplayBalance(updateScrapAmount, 18, 6));
   }
 
   return (
@@ -91,7 +91,7 @@ const Sbs: React.FC = () => {
         {!!account ? (
           <>
             <Route exact path={path}>
-              <PageHeader icon={'🏦'} title="TBond -> TShare Swap" subtitle="Swap TBond to TShare" />
+              <PageHeader icon={'🏦'} title="Scrap -> Mineral Swap" subtitle="Swap Scrap to Mineral" />
             </Route>
             <Box mt={5}>
               <Grid container justify="center" spacing={6}>
@@ -101,24 +101,24 @@ const Sbs: React.FC = () => {
                       <Card>
                         <CardContent>
                           <StyledCardContentInner>
-                            <StyledCardTitle>TBonds</StyledCardTitle>
+                            <StyledCardTitle>Scraps</StyledCardTitle>
                             <StyledExchanger>
                               <StyledToken>
                                 <StyledCardIcon>
-                                  <TokenSymbol symbol={tombFinance.TBOND.symbol} size={54} />
+                                  <TokenSymbol symbol={teloFinance.SCRAP.symbol} size={54} />
                                 </StyledCardIcon>
                               </StyledToken>
                             </StyledExchanger>
                             <Grid item xs={12}>
                               <TokenInput
-                                onSelectMax={handleTBondSelectMax}
-                                onChange={handleTBondChange}
-                                value={tbondAmount}
-                                max={bondBalance}
-                                symbol="TBond"
+                                onSelectMax={handleScrapSelectMax}
+                                onChange={handleScrapChange}
+                                value={scrapAmount}
+                                max={scrapBalance}
+                                symbol="SCRAP"
                               ></TokenInput>
                             </Grid>
-                            <StyledDesc>{`${bondBalance} TBOND Available in Wallet`}</StyledDesc>
+                            <StyledDesc>{`${scrapBalance} SCRAP Available in Wallet`}</StyledDesc>
                           </StyledCardContentInner>
                         </CardContent>
                       </Card>
@@ -128,24 +128,24 @@ const Sbs: React.FC = () => {
                       <Card>
                         <CardContent>
                           <StyledCardContentInner>
-                            <StyledCardTitle>TShare</StyledCardTitle>
+                            <StyledCardTitle>MINERAL</StyledCardTitle>
                             <StyledExchanger>
                               <StyledToken>
                                 <StyledCardIcon>
-                                  <TokenSymbol symbol={tombFinance.TSHARE.symbol} size={54} />
+                                  <TokenSymbol symbol={teloFinance.MINERAL.symbol} size={54} />
                                 </StyledCardIcon>
                               </StyledToken>
                             </StyledExchanger>
                             <Grid item xs={12}>
                               <TokenInput
-                                onSelectMax={handleTShareSelectMax}
-                                onChange={handleTShareChange}
-                                value={tshareAmount}
-                                max={tshareBalance}
-                                symbol="TShare"
+                                onSelectMax={handleMineralSelectMax}
+                                onChange={handleMineralChange}
+                                value={mineralAmount}
+                                max={mineralBalance}
+                                symbol="MINERAL"
                               ></TokenInput>
                             </Grid>
-                            <StyledDesc>{`${tshareBalance} TSHARE Available in Swapper`}</StyledDesc>
+                            <StyledDesc>{`${mineralBalance} MINERAL Available in Swapper`}</StyledDesc>
                           </StyledCardContentInner>
                         </CardContent>
                       </Card>
@@ -170,13 +170,13 @@ const Sbs: React.FC = () => {
                           onClick={approve}
                           size="medium"
                         >
-                          Approve TBOND
+                          Approve SCRAP
                         </Button>
                       ) : (
                         <Button
                           color="primary"
                           variant="contained"
-                          onClick={() => onSwapTShare(tbondAmount.toString())}
+                          onClick={() => onSwapMineral(scrapAmount.toString())}
                           size="medium"
                         >
                           Swap

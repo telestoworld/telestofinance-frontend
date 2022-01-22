@@ -12,10 +12,10 @@ import { getDisplayBalance } from '../../../utils/formatBalance';
 import Label from '../../../components/Label';
 import useLpStats from '../../../hooks/useLpStats';
 import useTokenBalance from '../../../hooks/useTokenBalance';
-import useTombFinance from '../../../hooks/useTombFinance';
+import useTeloFinance from '../../../hooks/useTeloFinance';
 import { useWallet } from 'use-wallet';
 import useApproveZapper, { ApprovalState } from '../../../hooks/useApproveZapper';
-import { TOMB_TICKER, TSHARE_TICKER, FTM_TICKER } from '../../../utils/constants';
+import { TELO_TICKER, MINERAL_TICKER, NEAR_TICKER } from '../../../utils/constants';
 import { Alert } from '@material-ui/lab';
 
 interface ZapProps extends ModalProps {
@@ -25,21 +25,21 @@ interface ZapProps extends ModalProps {
 }
 
 const ZapModal: React.FC<ZapProps> = ({ onConfirm, onDismiss, tokenName = '', decimals = 18 }) => {
-  const tombFinance = useTombFinance();
+  const teloFinance = useTeloFinance();
   const { balance } = useWallet();
-  const ftmBalance = (Number(balance) / 1e18).toFixed(4).toString();
-  const tombBalance = useTokenBalance(tombFinance.TOMB);
-  const tshareBalance = useTokenBalance(tombFinance.TSHARE);
+  const nearBalance = (Number(balance) / 1e18).toFixed(4).toString();
+  const teloBalance = useTokenBalance(teloFinance.TELO);
+  const mineralBalance = useTokenBalance(teloFinance.MINERAL);
   const [val, setVal] = useState('');
-  const [zappingToken, setZappingToken] = useState(FTM_TICKER);
-  const [zappingTokenBalance, setZappingTokenBalance] = useState(ftmBalance);
+  const [zappingToken, setZappingToken] = useState(NEAR_TICKER);
+  const [zappingTokenBalance, setZappingTokenBalance] = useState(nearBalance);
   const [estimate, setEstimate] = useState({ token0: '0', token1: '0' }); // token0 will always be FTM in this case
   const [approveZapperStatus, approveZapper] = useApproveZapper(zappingToken);
-  const tombFtmLpStats = useLpStats('TOMB-FTM-LP');
-  const tShareFtmLpStats = useLpStats('TSHARE-FTM-LP');
-  const tombLPStats = useMemo(() => (tombFtmLpStats ? tombFtmLpStats : null), [tombFtmLpStats]);
-  const tshareLPStats = useMemo(() => (tShareFtmLpStats ? tShareFtmLpStats : null), [tShareFtmLpStats]);
-  const ftmAmountPerLP = tokenName.startsWith(TOMB_TICKER) ? tombLPStats?.ftmAmount : tshareLPStats?.ftmAmount;
+  const teloNearLpStats = useLpStats('NEAR-LP');
+  const minerealNearLpStats = useLpStats('MINERAL-NEAR-LP');
+  const teloLPStats = useMemo(() => (teloNearLpStats ? teloNearLpStats : null), [teloNearLpStats]);
+  const mineralLPStats = useMemo(() => (mineralNearLpStats ? mineralNearLpStats : null), [mineralNearLpStats]);
+  const nearAmountPerLP = tokenName.startsWith(TELO_TICKER) ? teloLPStats?.nearAmount : mineralLPStats?.nearAmount;
   /**
    * Checks if a value is a valid number or not
    * @param n is the value to be evaluated for a number
@@ -51,12 +51,12 @@ const ZapModal: React.FC<ZapProps> = ({ onConfirm, onDismiss, tokenName = '', de
   const handleChangeAsset = (event: any) => {
     const value = event.target.value;
     setZappingToken(value);
-    setZappingTokenBalance(ftmBalance);
-    if (event.target.value === TSHARE_TICKER) {
-      setZappingTokenBalance(getDisplayBalance(tshareBalance, decimals));
+    setZappingTokenBalance(nearBalance);
+    if (event.target.value === MINERAL_TICKER) {
+      setZappingTokenBalance(getDisplayBalance(mineralBalance, decimals));
     }
-    if (event.target.value === TOMB_TICKER) {
-      setZappingTokenBalance(getDisplayBalance(tombBalance, decimals));
+    if (event.target.value === TELO_TICKER) {
+      setZappingTokenBalance(getDisplayBalance(teloBalance, decimals));
     }
   };
 
@@ -67,13 +67,13 @@ const ZapModal: React.FC<ZapProps> = ({ onConfirm, onDismiss, tokenName = '', de
     }
     if (!isNumeric(e.currentTarget.value)) return;
     setVal(e.currentTarget.value);
-    const estimateZap = await tombFinance.estimateZapIn(zappingToken, tokenName, String(e.currentTarget.value));
+    const estimateZap = await teloFinance.estimateZapIn(zappingToken, tokenName, String(e.currentTarget.value));
     setEstimate({ token0: estimateZap[0].toString(), token1: estimateZap[1].toString() });
   };
 
   const handleSelectMax = async () => {
     setVal(zappingTokenBalance);
-    const estimateZap = await tombFinance.estimateZapIn(zappingToken, tokenName, String(zappingTokenBalance));
+    const estimateZap = await teloFinance.estimateZapIn(zappingToken, tokenName, String(zappingTokenBalance));
     setEstimate({ token0: estimateZap[0].toString(), token1: estimateZap[1].toString() });
   };
 
@@ -98,8 +98,8 @@ const ZapModal: React.FC<ZapProps> = ({ onConfirm, onDismiss, tokenName = '', de
         id="select"
         value={zappingToken}
       >
-        <StyledMenuItem value={FTM_TICKER}>FTM</StyledMenuItem>
-        <StyledMenuItem value={TSHARE_TICKER}>TSHARE</StyledMenuItem>
+        <StyledMenuItem value={NEAR_TICKER}>NEAR</StyledMenuItem>
+        <StyledMenuItem value={MINERAL_TICKER}>MINERAL</StyledMenuItem>
         {/* Tomb as an input for zapping will be disabled due to issues occuring with the Gatekeeper system */}
         {/* <StyledMenuItem value={TOMB_TICKER}>TOMB</StyledMenuItem> */}
       </Select>
@@ -113,12 +113,12 @@ const ZapModal: React.FC<ZapProps> = ({ onConfirm, onDismiss, tokenName = '', de
       <Label text="Zap Estimations" />
       <StyledDescriptionText>
         {' '}
-        {tokenName}: {Number(estimate.token0) / Number(ftmAmountPerLP)}
+        {tokenName}: {Number(estimate.token0) / Number(nearAmountPerLP)}
       </StyledDescriptionText>
       <StyledDescriptionText>
         {' '}
-        ({Number(estimate.token0)} {FTM_TICKER} / {Number(estimate.token1)}{' '}
-        {tokenName.startsWith(TOMB_TICKER) ? TOMB_TICKER : TSHARE_TICKER}){' '}
+        ({Number(estimate.token0)} {NEAR_TICKER} / {Number(estimate.token1)}{' '}
+        {tokenName.startsWith(TELO_TICKER) ? TELO_TICKER : MINERAL_TICKER}){' '}
       </StyledDescriptionText>
       <ModalActions>
         <Button

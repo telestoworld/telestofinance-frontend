@@ -1,21 +1,21 @@
 import { useCallback } from 'react';
-import useTombFinance from './useTombFinance';
+import useTeloFinance from './useTeloFinance';
 import useHandleTransactionReceipt from './useHandleTransactionReceipt';
 
-const useWithdrawFromMasonry = () => {
-  const tombFinance = useTombFinance();
+const useWithdrawFromLounge = () => {
+  const teloFinance = useTeloFinance();
   const handleTransactionReceipt = useHandleTransactionReceipt();
 
   const handleWithdraw = useCallback(
     (amount: string) => {
       handleTransactionReceipt(
-        tombFinance.withdrawShareFromMasonry(amount),
-        `Withdraw ${amount} TSHARE from the masonry`,
+        teloFinance.withdrawMineralFromLounge(amount),
+        `Withdraw ${amount} MINERAL from the lounge`,
       );
     },
-    [tombFinance, handleTransactionReceipt],
+    [teloFinance, handleTransactionReceipt],
   );
   return { onWithdraw: handleWithdraw };
 };
 
-export default useWithdrawFromMasonry;
+export default useWithdrawFromLounge;

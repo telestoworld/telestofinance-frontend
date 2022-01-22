@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
 import { BigNumber } from 'ethers';
-import useTombFinance from './useTombFinance';
+import useTeloFinance from './useTeloFinance';
 import useRefresh from './useRefresh';
 
-const useTotalStakedOnMasonry = () => {
+const useTotalStakedOnLounge = () => {
   const [totalStaked, setTotalStaked] = useState(BigNumber.from(0));
-  const tombFinance = useTombFinance();
+  const teloFinance = useTeloFinance();
   const { slowRefresh } = useRefresh();
-  const isUnlocked = tombFinance?.isUnlocked;
+  const isUnlocked = teloFinance?.isUnlocked;
 
   useEffect(() => {
     async function fetchTotalStaked() {
       try {
-        setTotalStaked(await tombFinance.getTotalStakedInMasonry());
+        setTotalStaked(await teloFinance.getTotalStakedInLounge());
       } catch(err) {
         console.error(err);
       }
@@ -20,9 +20,9 @@ const useTotalStakedOnMasonry = () => {
     if (isUnlocked) {
      fetchTotalStaked();
     }
-  }, [isUnlocked, slowRefresh, tombFinance]);
+  }, [isUnlocked, slowRefresh, teloFinance]);
 
   return totalStaked;
 };
 
-export default useTotalStakedOnMasonry;
+export default useTotalStakedOnLounge;

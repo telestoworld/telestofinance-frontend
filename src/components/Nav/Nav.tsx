@@ -108,7 +108,7 @@ const Nav = () => {
                 Vapor Pools
               </Link>
               <Link color="textPrimary" to="/masonry" className={classes.link}>
-                Masonry
+                Trident Lounge
               </Link>
               <Link color="textPrimary" to="/scraps" className={classes.link}>
                 Scrap

@@ -1,26 +1,26 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Context from './context';
-import useTombFinance from '../../hooks/useTombFinance';
-import { Bank } from '../../tomb-finance';
+import useTeloFinance from '../../hooks/useTeloFinance';
+import { Bank } from '../../telesto-finance';
 import config, { bankDefinitions } from '../../config';
 
 const Banks: React.FC = ({ children }) => {
   const [banks, setBanks] = useState<Bank[]>([]);
-  const tombFinance = useTombFinance();
-  const isUnlocked = tombFinance?.isUnlocked;
+  const teloFinance = useTeloFinance();
+  const isUnlocked = teloFinance?.isUnlocked;
 
   const fetchPools = useCallback(async () => {
     const banks: Bank[] = [];
 
     for (const bankInfo of Object.values(bankDefinitions)) {
       if (bankInfo.finished) {
-        if (!tombFinance.isUnlocked) continue;
+        if (!teloFinance.isUnlocked) continue;
 
         // only show pools staked by user
-        const balance = await tombFinance.stakedBalanceOnBank(
+        const balance = await teloFinance.stakedBalanceOnBank(
           bankInfo.contract,
           bankInfo.poolId,
-          tombFinance.myAccount,
+          teloFinance.myAccount,
         );
         if (balance.lte(0)) {
           continue;
@@ -29,19 +29,19 @@ const Banks: React.FC = ({ children }) => {
       banks.push({
         ...bankInfo,
         address: config.deployments[bankInfo.contract].address,
-        depositToken: tombFinance.externalTokens[bankInfo.depositTokenName],
-        earnToken: bankInfo.earnTokenName === 'TOMB' ? tombFinance.TOMB : tombFinance.TSHARE,
+        depositToken: teloFinance.externalTokens[bankInfo.depositTokenName],
+        earnToken: bankInfo.earnTokenName === 'TELO' ? teloFinance.TELO : teloFinance.MINERAL,
       });
     }
     banks.sort((a, b) => (a.sort > b.sort ? 1 : -1));
     setBanks(banks);
-  }, [tombFinance, setBanks]);
+  }, [teloFinance, setBanks]);
 
   useEffect(() => {
-    if (tombFinance) {
+    if (teloFinance) {
       fetchPools().catch((err) => console.error(`Failed to fetch pools: ${err.stack}`));
     }
-  }, [isUnlocked, tombFinance, fetchPools]);
+  }, [isUnlocked, teloFinance, fetchPools]);
 
   return <Context.Provider value={{ banks }}>{children}</Context.Provider>;
 };

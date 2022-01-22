@@ -1,18 +1,18 @@
 import { useCallback } from 'react';
-import useTombFinance from './useTombFinance';
+import useTeloFinance from './useTeloFinance';
 import useHandleTransactionReceipt from './useHandleTransactionReceipt';
 
-const useStakeToMasonry = () => {
-  const tombFinance = useTombFinance();
+const useStakeToLounge = () => {
+  const teloFinance = useTeloFinance();
   const handleTransactionReceipt = useHandleTransactionReceipt();
 
   const handleStake = useCallback(
     (amount: string) => {
-      handleTransactionReceipt(tombFinance.stakeShareToMasonry(amount), `Stake ${amount} TSHARE to the masonry`);
+      handleTransactionReceipt(teloFinance.stakeShareToLounge(amount), `Stake ${amount} MINERAL to the lounge`);
     },
-    [tombFinance, handleTransactionReceipt],
+    [teloFinance, handleTransactionReceipt],
   );
   return { onStake: handleStake };
 };
 
-export default useStakeToMasonry;
+export default useStakeToLounge;

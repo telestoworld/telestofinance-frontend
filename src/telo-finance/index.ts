@@ -1,2 +1,2 @@
-export { TombFinance as default } from './TombFinance';
+export { TeloFinance as default } from './TelestoFinance';
 export type { Bank, BankInfo, ContractName } from './types';

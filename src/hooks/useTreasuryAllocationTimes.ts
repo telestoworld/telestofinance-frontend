@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import useTombFinance from './useTombFinance';
-import { AllocationTime } from '../tomb-finance/types';
+import useTeloFinance from './useTeloFinance';
+import { AllocationTime } from '../telo-finance/types';
 import useRefresh from './useRefresh';
 
 
@@ -10,12 +10,12 @@ const useTreasuryAllocationTimes = () => {
     from: new Date(),
     to: new Date(),
   });
-  const tombFinance = useTombFinance();
+  const teloFinance = useTeloFinance();
   useEffect(() => {
-    if (tombFinance) {
-      tombFinance.getTreasuryNextAllocationTime().then(setTime);
+    if (teloFinance) {
+      teloFinance.getTreasuryNextAllocationTime().then(setTime);
     }
-  }, [tombFinance, slowRefresh]);
+  }, [teloFinance, slowRefresh]);
   return time;
 };
 

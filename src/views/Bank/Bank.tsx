@@ -15,8 +15,8 @@ import Stake from './components/Stake';
 import useBank from '../../hooks/useBank';
 import useStatsForPool from '../../hooks/useStatsForPool';
 import useRedeem from '../../hooks/useRedeem';
-import { Bank as BankEntity } from '../../tomb-finance';
-import useTombFinance from '../../hooks/useTombFinance';
+import { Bank as BankEntity } from '../../telo-finance';
+import useTeloFinance from '../../hooks/useTeloFinance';
 
 const useStyles = makeStyles((theme) => ({
   gridItem: {
@@ -100,18 +100,18 @@ const Bank: React.FC = () => {
 };
 
 const LPTokenHelpText: React.FC<{ bank: BankEntity }> = ({ bank }) => {
-  const tombFinance = useTombFinance();
-  const tombAddr = tombFinance.TOMB.address;
-  const tshareAddr = tombFinance.TSHARE.address;
+  const teloFinance = useTeloFinance();
+  const teloAddr = teloFinance.TELO.address;
+  const mineralAddr = teloFinance.MINERAL.address;
 
   let pairName: string;
   let uniswapUrl: string;
-  if (bank.depositTokenName.includes('TOMB')) {
-    pairName = 'TOMB-FTM pair';
-    uniswapUrl = 'https://spookyswap.finance/add/FTM/' + tombAddr;
+  if (bank.depositTokenName.includes('TELO')) {
+    pairName = 'TELO-NEAR pair';
+    uniswapUrl = 'https://spookyswap.finance/add/FTM/' + teloAddr;
   } else {
-    pairName = 'TSHARE-FTM pair';
-    uniswapUrl = 'https://spookyswap.finance/add/FTM/' + tshareAddr;
+    pairName = 'MINERAL-NEAR pair';
+    uniswapUrl = 'https://spookyswap.finance/add/FTM/' + mineralAddr;
   }
   return (
     <Card>
@@ -127,7 +127,7 @@ const LPTokenHelpText: React.FC<{ bank: BankEntity }> = ({ bank }) => {
 const BankNotFound = () => {
   return (
     <Center>
-      <PageHeader icon="🏚" title="Not Found" subtitle="You've hit a bank just robbed by unicorns." />
+      <PageHeader icon="🏚" title="Not Found" subtitle="You've hit a bank just robbed by Telestonians." />
     </Center>
   );
 };

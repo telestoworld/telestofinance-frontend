@@ -1,16 +1,16 @@
 import React from 'react';
 
 //Graveyard ecosystem logos
-import tombLogo from '../../assets/img/crypto_tomb_cash.svg';
-import tShareLogo from '../../assets/img/crypto_tomb_share.svg';
-import tombLogoPNG from '../../assets/img/crypto_tomb_cash.f2b44ef4.png';
-import tShareLogoPNG from '../../assets/img/crypto_tomb_share.bf1a6c52.png';
+import teloLogo from '../../assets/img/crypto_tomb_cash.svg';
+import mineralLogo from '../../assets/img/crypto_tomb_share.svg';
+import teloLogoPNG from '../../assets/img/crypto_tomb_cash.f2b44ef4.png';
+import mineralLogoPNG from '../../assets/img/crypto_tomb_share.bf1a6c52.png';
 import scrapLogo from '../../assets/img/crypto_tomb_bond.svg';
 
-import tombFtmLpLogo from '../../assets/img/tomb_ftm_lp.png';
-import tshareFtmLpLogo from '../../assets/img/tshare_ftm_lp.png';
+import teloNearLpLogo from '../../assets/img/telo_near_lp.png';
+import mineralNearLpLogo from '../../assets/img/mineral_near_lp.png';
 
-import wftmLogo from '../../assets/img/ftm_logo_blue.svg';
+import wnearLogo from '../../assets/img/near_logo_blue.svg';
 import booLogo from '../../assets/img/spooky.png';
 import zooLogo from '../../assets/img/zoo_logo.svg';
 import shibaLogo from '../../assets/img/shiba_logo.svg';
@@ -18,17 +18,17 @@ import shibaLogo from '../../assets/img/shiba_logo.svg';
 const logosBySymbol: { [title: string]: string } = {
   //Real tokens
   //=====================
-  TOMB: tombLogo,
-  TOMBPNG: tombLogoPNG,
-  TSHAREPNG: tShareLogoPNG,
-  TSHARE: tShareLogo,
+  TELO: teloLogo,
+  TELOPNG: teloLogoPNG,
+  MINERALPNG: mineralLogoPNG,
+  MINERAL: mineralLogo,
   SCRAP: scrapLogo,
-  WFTM: wftmLogo,
+  WNEAR: wnearLogo,
   BOO: booLogo,
   SHIBA: shibaLogo,
   ZOO: zooLogo,
-  'TOMB-FTM-LP': tombFtmLpLogo,
-  'TSHARE-FTM-LP': tshareFtmLpLogo,
+  'TELO-NEAR-LP': teloNearLpLogo,
+  'MINERAL-NEAR-LP': mineralNearLpLogo,
 };
 
 type LogoProps = {
