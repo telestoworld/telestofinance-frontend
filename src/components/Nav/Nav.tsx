@@ -163,12 +163,12 @@ const Nav = () => {
               <List>
                 <ListItemLink primary="Home" to="/" />
                 <ListItemLink primary="VaporPools" to="/vaporpools" />
-                <ListItemLink primary="Masonry" to="/masonry" />
+                <ListItemLink primary="Trident Lounge" to="/tridentlounge" />
                 <ListItemLink primary="Scrap" to="/scraps" />
                 <ListItemLink primary="SBS" to="/sbs" />
                 <ListItemLink primary="Liquidity" to="/liquidity" />
                 <ListItemLink primary="Regulations" to="/regulations" />
-                <ListItem button component="a" href="https://docs.tomb.finance">
+                <ListItem button component="a" href="https://telesto.gitbook.io/telesto/">
                   <ListItemText>Docs</ListItemText>
                 </ListItem>
                 <ListItem style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

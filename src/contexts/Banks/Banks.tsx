@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Context from './context';
 import useTeloFinance from '../../hooks/useTeloFinance';
-import { Bank } from '../../telesto-finance';
+import { Bank } from '../../telo-finance';
 import config, { bankDefinitions } from '../../config';
 
 const Banks: React.FC = ({ children }) => {

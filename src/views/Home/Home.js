@@ -9,7 +9,7 @@ import { createGlobalStyle } from 'styled-components';
 import CountUp from 'react-countup';
 import CardIcon from '../../components/CardIcon';
 import TokenSymbol from '../../components/TokenSymbol';
-import useTeloStats from '../../hooks/useTStats';
+import useTeloStats from '../../hooks/useTeloStats';
 import useLpStats from '../../hooks/useLpStats';
 import useModal from '../../hooks/useModal';
 import useZap from '../../hooks/useZap';
@@ -55,7 +55,7 @@ const Home = () => {
   let telo;
   let mineral;
   if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-    telo = terloTesting;
+    telo = teloTesting;
     mineral = mineralTesting;
   } else {
     telo = teloProd;
@@ -350,7 +350,7 @@ const Home = () => {
         <Grid item xs={12} sm={6}>
           <Card>
             <CardContent align="center">
-              <h2>MINERAL- NEAR LP</h2>
+              <h2>MINERAL-NEAR LP</h2>
               <Box mt={2}>
                 <CardIcon>
                   <TokenSymbol symbol="MINERAL-NEAR-LP" />

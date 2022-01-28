@@ -1,11 +1,11 @@
 import React from 'react';
 
 //Graveyard ecosystem logos
-import teloLogo from '../../assets/img/crypto_tomb_cash.svg';
-import mineralLogo from '../../assets/img/crypto_tomb_share.svg';
-import teloLogoPNG from '../../assets/img/crypto_tomb_cash.f2b44ef4.png';
-import mineralLogoPNG from '../../assets/img/crypto_tomb_share.bf1a6c52.png';
-import scrapLogo from '../../assets/img/crypto_tomb_bond.svg';
+import teloLogo from '../../assets/img/crypto_telo_cash.svg';
+import mineralLogo from '../../assets/img/crypto_telo_share.svg';
+import teloLogoPNG from '../../assets/img/crypto_telo_cash.f2b44ef4.png';
+import mineralLogoPNG from '../../assets/img/crypto_telo_share.bf1a6c52.png';
+import scrapLogo from '../../assets/img/crypto_telo_bond.svg';
 
 import teloNearLpLogo from '../../assets/img/telo_near_lp.png';
 import mineralNearLpLogo from '../../assets/img/mineral_near_lp.png';

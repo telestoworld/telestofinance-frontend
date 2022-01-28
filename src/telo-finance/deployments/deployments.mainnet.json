@@ -861,7 +861,7 @@
       }
     ]
   },
-  "tomb": {
+  "telo": {
     "address": "0x6c021Ae822BEa943b2E66552bDe1D2696a53fbB7",
     "abi": [
       {
@@ -1350,7 +1350,7 @@
       },
       {
         "inputs": [],
-        "name": "tombOracle",
+        "name": "teloOracle",
         "outputs": [
           {
             "internalType": "address",
@@ -1535,7 +1535,7 @@
         "inputs": [
           {
             "internalType": "address",
-            "name": "_tombOracle",
+            "name": "_teloOracle",
             "type": "address"
           }
         ],
@@ -1714,7 +1714,7 @@
           },
           {
             "internalType": "address",
-            "name": "_tombPool",
+            "name": "_teloPool",
             "type": "address"
           },
           {
@@ -1753,7 +1753,7 @@
       }
     ]
   },
-  "tShare": {
+  "mineral": {
     "address": "0x4cdF39285D7Ca8eB3f090fDA0C069ba5F4145B37",
     "abi": [
       {
@@ -2891,7 +2891,7 @@
           {
             "indexed": false,
             "internalType": "uint256",
-            "name": "tombAmount",
+            "name": "teloAmount",
             "type": "uint256"
           },
           {
@@ -3011,7 +3011,7 @@
           {
             "indexed": false,
             "internalType": "uint256",
-            "name": "tombAmount",
+            "name": "teloAmount",
             "type": "uint256"
           },
           {
@@ -3434,7 +3434,7 @@
       },
       {
         "inputs": [],
-        "name": "tomb",
+        "name": "telo",
         "outputs": [
           {
             "internalType": "address",
@@ -3447,7 +3447,7 @@
       },
       {
         "inputs": [],
-        "name": "tombOracle",
+        "name": "teloOracle",
         "outputs": [
           {
             "internalType": "address",
@@ -3460,7 +3460,7 @@
       },
       {
         "inputs": [],
-        "name": "tombPriceCeiling",
+        "name": "teloPriceCeiling",
         "outputs": [
           {
             "internalType": "uint256",
@@ -3473,7 +3473,7 @@
       },
       {
         "inputs": [],
-        "name": "tombPriceOne",
+        "name": "teloPriceOne",
         "outputs": [
           {
             "internalType": "uint256",
@@ -3486,7 +3486,7 @@
       },
       {
         "inputs": [],
-        "name": "tshare",
+        "name": "mineral",
         "outputs": [
           {
             "internalType": "address",
@@ -3529,7 +3529,7 @@
         "outputs": [
           {
             "internalType": "uint256",
-            "name": "tombPrice",
+            "name": "teloPrice",
             "type": "uint256"
           }
         ],
@@ -3542,7 +3542,7 @@
         "outputs": [
           {
             "internalType": "uint256",
-            "name": "_tombPrice",
+            "name": "_teloPrice",
             "type": "uint256"
           }
         ],
@@ -3618,7 +3618,7 @@
         "inputs": [
           {
             "internalType": "address",
-            "name": "_tomb",
+            "name": "_telo",
             "type": "address"
           },
           {
@@ -3628,12 +3628,12 @@
           },
           {
             "internalType": "address",
-            "name": "_tshare",
+            "name": "_mineral",
             "type": "address"
           },
           {
             "internalType": "address",
-            "name": "_tombOracle",
+            "name": "_teloOracle",
             "type": "address"
           },
           {
@@ -3682,7 +3682,7 @@
         "inputs": [
           {
             "internalType": "address",
-            "name": "_tombOracle",
+            "name": "_teloOracle",
             "type": "address"
           }
         ],
@@ -3695,7 +3695,7 @@
         "inputs": [
           {
             "internalType": "uint256",
-            "name": "_tombPriceCeiling",
+            "name": "_teloPriceCeiling",
             "type": "uint256"
           }
         ],
@@ -3884,7 +3884,7 @@
         "inputs": [
           {
             "internalType": "uint256",
-            "name": "_tombAmount",
+            "name": "_teloAmount",
             "type": "uint256"
           },
           {
@@ -4244,7 +4244,7 @@
       },
       {
         "inputs": [],
-        "name": "tomb",
+        "name": "telo",
         "outputs": [
           {
             "internalType": "contract IERC20",
@@ -4298,7 +4298,7 @@
         "inputs": [
           {
             "internalType": "contract IERC20",
-            "name": "_tomb",
+            "name": "_telo",
             "type": "address"
           },
           {
@@ -4574,7 +4574,7 @@
         "inputs": [
           {
             "internalType": "address",
-            "name": "_tomb",
+            "name": "_telo",
             "type": "address"
           },
           {
@@ -4786,7 +4786,7 @@
       },
       {
         "inputs": [],
-        "name": "tomb",
+        "name": "telo",
         "outputs": [
           {
             "internalType": "contract IERC20",
@@ -4799,7 +4799,7 @@
       },
       {
         "inputs": [],
-        "name": "tombPerSecond",
+        "name": "teloPerSecond",
         "outputs": [
           {
             "internalType": "uint256",
@@ -5060,7 +5060,7 @@
         "inputs": [
           {
             "internalType": "address",
-            "name": "_tomb",
+            "name": "_telo",
             "type": "address"
           },
           {
@@ -5272,7 +5272,7 @@
       },
       {
         "inputs": [],
-        "name": "tomb",
+        "name": "telo",
         "outputs": [
           {
             "internalType": "contract IERC20",
@@ -5285,7 +5285,7 @@
       },
       {
         "inputs": [],
-        "name": "tombPerSecond",
+        "name": "teloPerSecond",
         "outputs": [
           {
             "internalType": "uint256",
@@ -5546,7 +5546,7 @@
         "inputs": [
           {
             "internalType": "address",
-            "name": "_tomb",
+            "name": "_telo",
             "type": "address"
           },
           {
@@ -5758,7 +5758,7 @@
       },
       {
         "inputs": [],
-        "name": "tomb",
+        "name": "telo",
         "outputs": [
           {
             "internalType": "contract IERC20",
@@ -5771,7 +5771,7 @@
       },
       {
         "inputs": [],
-        "name": "tombPerSecond",
+        "name": "teloPerSecond",
         "outputs": [
           {
             "internalType": "uint256",
@@ -6032,7 +6032,7 @@
         "inputs": [
           {
             "internalType": "address",
-            "name": "_tomb",
+            "name": "_telo",
             "type": "address"
           },
           {
@@ -6244,7 +6244,7 @@
       },
       {
         "inputs": [],
-        "name": "tomb",
+        "name": "telo",
         "outputs": [
           {
             "internalType": "contract IERC20",
@@ -6257,7 +6257,7 @@
       },
       {
         "inputs": [],
-        "name": "tombPerSecond",
+        "name": "teloPerSecond",
         "outputs": [
           {
             "internalType": "uint256",
@@ -6518,7 +6518,7 @@
         "inputs": [
           {
             "internalType": "address",
-            "name": "_tomb",
+            "name": "_telo",
             "type": "address"
           },
           {
@@ -6748,7 +6748,7 @@
       },
       {
         "inputs": [],
-        "name": "tomb",
+        "name": "telo",
         "outputs": [
           {
             "internalType": "contract IERC20",
@@ -7009,7 +7009,7 @@
         "inputs": [
           {
             "internalType": "address",
-            "name": "_tomb",
+            "name": "_telo",
             "type": "address"
           },
           {
@@ -7239,7 +7239,7 @@
       },
       {
         "inputs": [],
-        "name": "tomb",
+        "name": "telo",
         "outputs": [
           {
             "internalType": "contract IERC20",
@@ -7493,14 +7493,14 @@
       }
     ]
   },
-  "TombFtmLPTShareRewardPool": {
+  "TombFtmLPMineralRewardPool": {
     "address": "0xcc0a87F7e7c693042a9Cc703661F5060c80ACb43",
     "abi": [
       {
         "inputs": [
           {
             "internalType": "address",
-            "name": "_tshare",
+            "name": "_mineral",
             "type": "address"
           },
           {
@@ -7672,7 +7672,7 @@
           },
           {
             "internalType": "uint256",
-            "name": "accTSharePerShare",
+            "name": "accMineralPerShare",
             "type": "uint256"
           },
           {
@@ -7712,7 +7712,7 @@
       },
       {
         "inputs": [],
-        "name": "tSharePerSecond",
+        "name": "mineralPerSecond",
         "outputs": [
           {
             "internalType": "uint256",
@@ -7738,7 +7738,7 @@
       },
       {
         "inputs": [],
-        "name": "tshare",
+        "name": "mineral",
         "outputs": [
           {
             "internalType": "contract IERC20",
@@ -7979,14 +7979,14 @@
       }
     ]
   },
-  "TshareFtmLPTShareRewardPool": {
+  "TshareFtmLPMineralRewardPool": {
     "address": "0xcc0a87F7e7c693042a9Cc703661F5060c80ACb43",
     "abi": [
       {
         "inputs": [
           {
             "internalType": "address",
-            "name": "_tshare",
+            "name": "_mineral",
             "type": "address"
           },
           {
@@ -8158,7 +8158,7 @@
           },
           {
             "internalType": "uint256",
-            "name": "accTSharePerShare",
+            "name": "accMineralPerShare",
             "type": "uint256"
           },
           {
@@ -8198,7 +8198,7 @@
       },
       {
         "inputs": [],
-        "name": "tSharePerSecond",
+        "name": "mineralPerSecond",
         "outputs": [
           {
             "internalType": "uint256",
@@ -8224,7 +8224,7 @@
       },
       {
         "inputs": [],
-        "name": "tshare",
+        "name": "mineral",
         "outputs": [
           {
             "internalType": "contract IERC20",
@@ -9268,7 +9268,7 @@
         "inputs": [
           {
             "internalType": "address",
-            "name": "_tombOracle",
+            "name": "_teloOracle",
             "type": "address"
           }
         ],
@@ -9334,7 +9334,7 @@
       },
       {
         "inputs": [],
-        "name": "tomb",
+        "name": "telo",
         "outputs": [
           {
             "internalType": "address",
@@ -10388,14 +10388,14 @@
       }
     ]
   },
-  "TShareSwapper": {
+  "MineralSwapper": {
     "address": "0x2942168Fa8A39d070cB1173a54479F7C6A94604d",
     "abi": [
       {
         "inputs": [
           {
             "internalType": "address",
-            "name": "_tomb",
+            "name": "_telo",
             "type": "address"
           },
           {
@@ -10405,7 +10405,7 @@
           },
           {
             "internalType": "address",
-            "name": "_tshare",
+            "name": "_mineral",
             "type": "address"
           },
           {
@@ -10415,12 +10415,12 @@
           },
           {
             "internalType": "address",
-            "name": "_tombSpookyLpPair",
+            "name": "_teloSpookyLpPair",
             "type": "address"
           },
           {
             "internalType": "address",
-            "name": "_tshareSpookyLpPair",
+            "name": "_mineralSpookyLpPair",
             "type": "address"
           },
           {
@@ -10488,7 +10488,7 @@
           {
             "indexed": false,
             "internalType": "uint256",
-            "name": "tshareAmount",
+            "name": "mineralAmount",
             "type": "uint256"
           }
         ],
@@ -10516,7 +10516,7 @@
             "type": "uint256"
           }
         ],
-        "name": "estimateAmountOfTShare",
+        "name": "estimateAmountOfMineral",
         "outputs": [
           {
             "internalType": "uint256",
@@ -10548,7 +10548,7 @@
       },
       {
         "inputs": [],
-        "name": "getTShareAmountPerTomb",
+        "name": "getMineralAmountPerTomb",
         "outputs": [
           {
             "internalType": "uint256",
@@ -10561,7 +10561,7 @@
       },
       {
         "inputs": [],
-        "name": "getTShareBalance",
+        "name": "getMineralBalance",
         "outputs": [
           {
             "internalType": "uint256",
@@ -10574,7 +10574,7 @@
       },
       {
         "inputs": [],
-        "name": "getTSharePrice",
+        "name": "getMineralPrice",
         "outputs": [
           {
             "internalType": "uint256",
@@ -10652,7 +10652,7 @@
             "type": "uint256"
           }
         ],
-        "name": "swapTBondToTShare",
+        "name": "swapTBondToMineral",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
@@ -10672,7 +10672,7 @@
       },
       {
         "inputs": [],
-        "name": "tomb",
+        "name": "telo",
         "outputs": [
           {
             "internalType": "contract IERC20",
@@ -10685,7 +10685,7 @@
       },
       {
         "inputs": [],
-        "name": "tombSpookyLpPair",
+        "name": "teloSpookyLpPair",
         "outputs": [
           {
             "internalType": "address",
@@ -10724,7 +10724,7 @@
       },
       {
         "inputs": [],
-        "name": "tshare",
+        "name": "mineral",
         "outputs": [
           {
             "internalType": "contract IERC20",
@@ -10737,7 +10737,7 @@
       },
       {
         "inputs": [],
-        "name": "tshareSpookyLpPair",
+        "name": "mineralSpookyLpPair",
         "outputs": [
           {
             "internalType": "address",
@@ -10769,7 +10769,7 @@
             "type": "uint256"
           }
         ],
-        "name": "withdrawTShare",
+        "name": "withdrawMineral",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"

@@ -1,1 +1,1 @@
-export { default } from './Cemetery';
+export { default } from './VaporPools';
